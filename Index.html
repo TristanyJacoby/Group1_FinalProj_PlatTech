@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arangkada – Explore the Philippines</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <img src="assets/yellow logo.png" alt="Arangkada Logo" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="book.html">Book</a></li>
+      <li><a href="signup.html">Sign Up</a></li>
+      <li class="hamburger-wrap">
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+        <!-- Dropdown Menu -->
+        <div class="hamburger-dropdown" id="hamburgerDropdown">
+          <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+          <a href="book.html"><i class="fa-solid fa-car"></i> Book a Vehicle</a>
+          <a href="signup.html"><i class="fa-solid fa-user-plus"></i> Sign Up</a>
+          <div class="dropdown-divider"></div>
+          <a href="#"><i class="fa-solid fa-phone"></i> Contact Us</a>
+          <a href="#"><i class="fa-solid fa-circle-info"></i> About</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p>Welcome to</p>
+    <h1>Arangkada</h1>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+
+      <!-- Vehicles -->
+      <div class="search-field">
+        <i class="fa-solid fa-car field-icon"></i>
+        <select id="vehicleSelect" class="field-input">
+          <option value="" disabled selected>Vehicles</option>
+          <option value="Economy">Economy</option>
+          <option value="Compact">Compact</option>
+          <option value="Standard">Standard</option>
+          <option value="People Carrier">People Carrier</option>
+          <option value="Luxury">Luxury</option>
+        </select>
+      </div>
+
+      <!-- Pickup Date -->
+      <div class="search-field">
+        <i class="fa-regular fa-calendar field-icon"></i>
+        <input type="date" id="pickupDate" class="field-input" />
+      </div>
+
+      <!-- Location -->
+      <div class="search-field">
+        <i class="fa-solid fa-location-dot field-icon"></i>
+        <select id="locationSelect" class="field-input">
+          <option value="" disabled selected>Select Location</option>
+          <option value="Manila">Manila</option>
+          <option value="Cebu">Cebu</option>
+          <option value="Davao">Davao</option>
+          <option value="Quezon City">Quezon City</option>
+          <option value="Makati">Makati</option>
+          <option value="Tagaytay">Tagaytay</option>
+          <option value="Boracay">Boracay</option>
+          <option value="Palawan">Palawan</option>
+        </select>
+      </div>
+
+      <button class="search-btn" id="searchBtn">
+        Search
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <!-- Validation Message -->
+    <div id="searchError" class="search-error"></div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section class="fleet">
+  <h2>We help you explore the greatness of the Philippines</h2>
+  <div class="fleet-grid">
+
+    <a href="book.html?category=Economy" class="fleet-item">
+      <img src="https://www.discounthawaiicarrental.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/07/economy-silver.png.webp" alt="Economy Car" />
+      <span>Economy</span>
+    </a>
+
+    <a href="book.html?category=Compact" class="fleet-item">
+      <img src="https://www.discounthawaiicarrental.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/07/economy-silver.png.webp" alt="Compact Car" />
+      <span>Compact</span>
+    </a>
+
+    <a href="book.html?category=Standard" class="fleet-item">
+      <img src="https://www.discounthawaiicarrental.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/07/economy-silver.png.webp" alt="Standard Car" />
+      <span>Standard</span>
+    </a>
+
+    <a href="book.html?category=People+Carrier" class="fleet-item">
+      <img src="https://www.discounthawaiicarrental.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/07/economy-silver.png.webp"alt="People Carrier" />
+      <span style="text-align:center;">People<br>Carrier</span>
+    </a>
+
+    <a href="book.html?category=Luxury" class="fleet-item">
+      <img src="https://www.discounthawaiicarrental.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/07/economy-silver.png.webp"  alt="Luxury Car" />
+      <span>Luxury</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<div class="why-wrapper">
+  <section class="why">
+    <div class="why-label">WHY CHOOSE <span class="accent">ARANGKADA</span></div>
+    <div class="why-sub">We help you choose the right vehicle for your adventure</div>
+
+    <div class="why-steps">
+      <div class="step">
+        <div class="step-icon">
+          <img src="assets/search icon.png" alt="Find a location" />
+        </div>
+        <div class="step-title">Find</div>
+        <div class="step-desc">Set Pickup location with<br>your rental date</div>
+      </div>
+
+      <div class="step">
+        <div class="step-icon">
+          <img src="assets/select icon.png" alt="Select a vehicle" />
+        </div>
+        <div class="step-title">Select</div>
+        <div class="step-desc">Select a vehicle available</div>
+      </div>
+
+      <div class="step">
+        <div class="step-icon">
+          <img src="assets/car icon.png" alt="Reserve the vehicle" />
+        </div>
+        <div class="step-title">Reserve</div>
+        <div class="step-desc">Reserve the vehicle</div>
+      </div>
+    </div>
+
+    <a href="book.html" class="book-btn">Book Now</a>
+  </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
