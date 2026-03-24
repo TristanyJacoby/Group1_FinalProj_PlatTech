@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arangkada – Log In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <img src="assets/yellow logo.png" alt="Arangkada Logo" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="booking.html">Book</a></li>
+      <li><a href="signup.html">Sign Up</a></li>
+      <li><a href="login.html" class="active">Log In</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- LOGIN HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p>Welcome back</p>
+    <h1>Log In</h1>
+
+    <!-- Login Form -->
+    <form class="signup-form" id="loginForm">
+      <div class="form-field">
+        <i class="fa-solid fa-envelope field-icon"></i>
+        <input type="email" id="loginEmail" class="field-input" placeholder="Email Address" required />
+      </div>
+
+      <div class="form-field">
+        <i class="fa-solid fa-lock field-icon"></i>
+        <input type="password" id="loginPassword" class="field-input" placeholder="Password" required />
+      </div>
+
+      <button type="submit" class="search-btn">
+        Log In <i class="fa-solid fa-right-to-bracket"></i>
+      </button>
+    </form>
+
+    <!-- Validation Message -->
+    <div id="loginError" class="search-error"></div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
