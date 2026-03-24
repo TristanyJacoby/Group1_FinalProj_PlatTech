@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental - Book A Car</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="booking_style.css">
+</head>
+<body class="text-gray-800">
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-box">
+                <div class="logo-icon">A</div>
+                <span class="logo-text">ARANGKADA</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="booking.html" class="active">Book</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+                <li class="hamburger-wrap">
+                    <div class="hamburger" id="hamburger">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <ul class="dropdown-menu" id="hamburgerDropdown">
+                        <li><a href="#"><i class="fa-solid fa-car"></i> Home</a></li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot"></i> Locations</a></li>
+                        <li><a href="#"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+                        <li><a href="#"><i class="fa-solid fa-phone"></i> Contact</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row gap-8">
+        <aside class="w-full md:w-64 flex-shrink-0">
+            <div class="filter-section">
+                <div class="filter-header uppercase tracking-wider">Car Type</div>
+                <div class="p-4 space-y-3 text-sm text-gray-500" id="type-filters">
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="Economy" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> Economy</label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="Compact" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> Compact</label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="Standard" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> Standard</label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="People Carrier" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> People Carrier</label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="Luxury" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> Luxury</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-header uppercase tracking-wider">Transmission</div>
+                <div class="p-4 space-y-3 text-sm text-gray-500" id="trans-filters">
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="Automatic" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> Automatic</label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="Manual" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> Manual</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-header uppercase tracking-wider">Passenger Seats</div>
+                <div class="p-4 space-y-3 text-sm text-gray-500" id="seat-filters">
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="2" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> 2 Seats</label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="4" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> 4 Seats</label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="5" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> 5 Seats</label>
+                    <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" value="7" checked class="w-4 h-4 rounded border-gray-300 text-[#E5A020] focus:ring-0"> 7+ Seats</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-header uppercase tracking-wider">Price Range (Php)</div>
+                <div class="price-input-container space-y-4">
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-bold text-gray-400 uppercase">Min Price</label>
+                        <div class="price-input-wrapper">
+                            <span class="text-xs font-bold text-gray-400">₱</span>
+                            <input type="number" id="minPriceInput" class="price-input" placeholder="0" value="0">
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-bold text-gray-400 uppercase">Max Price</label>
+                        <div class="price-input-wrapper">
+                            <span class="text-xs font-bold text-gray-400">₱</span>
+                            <input type="number" id="maxPriceInput" class="price-input" placeholder="Any" value="25000">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section p-1">
+                <div class="map-box">
+                    <div class="map-overlay">
+                        <i class="fa-solid fa-location-dot accent-color mr-1"></i>
+                        <span id="current-loc-label">Cubao, QC</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1">
+            <div class="bg-white border border-gray-200 rounded-sm shadow-sm mb-6">
+                <div class="bg-[#fff9f5] px-4 py-2 border-b border-gray-100 flex items-center">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass accent-color text-xs"></i>
+                        <span class="text-[10px] font-bold tracking-widest uppercase" style="font-family: 'Montserrat';">Update Search Criteria</span>
+                    </div>
+                </div>
+                <div class="p-4 flex flex-wrap gap-6 items-end">
+                    <div class="flex-1 min-w-[200px]">
+                        <p class="text-[9px] text-gray-400 font-bold uppercase mb-1">Pick-up location</p>
+                        <select id="locationSelect" class="text-xs font-medium border-b border-gray-200 bg-transparent w-full pb-1 focus:outline-none focus:border-accent">
+                            <option value="Cubao">Cubao, Quezon City</option>
+                            <option value="Pasig">Pasig, Metro Manila</option>
+                            <option value="Makati">Makati, CBD</option>
+                        </select>
+                    </div>
+                    <div class="flex-1 min-w-[200px]">
+                        <label for="pickupDate" class="text-[9px] text-gray-400 font-bold uppercase mb-1 block">Pick-up Date</label>
+                        <input type="date" id="pickupDate" class="text-xs font-medium border-b border-gray-200 bg-transparent w-full pb-1 cursor-pointer focus:outline-none focus:border-accent">
+                    </div>
+                    <button id="searchBtn" class="bg-accent text-white px-8 py-2 rounded-full text-[10px] font-bold tracking-widest uppercase hover:opacity-90 transition-opacity">Update Results</button>
+                </div>
+            </div>
+
+            <div id="car-listings" class="grid grid-cols-1 gap-4"></div>
+        </main>
+    </div>
+
+    <script src="booking_script.js"></script>
+</body>
+</html>

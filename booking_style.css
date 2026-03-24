@@ -1,0 +1,199 @@
+:root {
+    --gold: #E5A020;
+    --black: #1a1a1a;
+    --text: #222;
+    --white: #fff;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #fcfcfc;
+    color: var(--text);
+    padding-top: 80px;
+}
+
+.accent-color { color: var(--gold); }
+.bg-accent { background-color: var(--gold); }
+
+/* ── NAV STYLES ── */
+nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--white);
+    box-shadow: 0 2px 16px rgba(0,0,0,.08);
+    padding: 12px 0;
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    background-color: var(--gold);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+}
+
+.logo-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--black);
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 35px;
+}
+
+.nav-links li { position: relative; }
+
+.nav-links li a {
+    text-decoration: none;
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 8px 0;
+    transition: color 0.3s;
+    display: block;
+}
+
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--gold);
+    transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after, 
+.nav-links li a.active::after {
+    width: 100%;
+}
+
+.nav-links li a:hover, 
+.nav-links li a.active {
+    color: var(--gold);
+}
+
+/* ── HAMBURGER ── */
+.hamburger-wrap { position: relative; margin-left: 10px; }
+.hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; width: 24px; }
+.hamburger span { display: block; width: 100%; height: 2.5px; background: var(--black); border-radius: 2px; transition: .3s; }
+.hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 25px);
+    right: 0;
+    width: 200px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.12);
+    padding: 10px 0;
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity .3s, transform .3s;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.dropdown-menu.open { display: block; opacity: 1; transform: translateY(0); }
+.dropdown-menu li a { padding: 12px 20px; display: flex; align-items: center; gap: 12px; color: var(--black); font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 13px; }
+.dropdown-menu li a:hover { background: #fdf8f0; color: var(--gold); }
+
+/* ── SIDEBAR FILTERS ── */
+.filter-section {
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    background: white;
+    margin-bottom: 1.5rem;
+}
+.filter-header {
+    background-color: #fff9f5;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid var(--gold);
+    font-weight: 700;
+    font-size: 0.875rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.price-input-container { padding: 1.25rem 1rem; }
+.price-input-wrapper { display: flex; align-items: center; gap: 8px; }
+.price-input { width: 100%; border: 1px solid #e5e7eb; border-radius: 4px; padding: 6px 10px; font-size: 12px; font-weight: 600; color: var(--black); outline: none; }
+.price-input:focus { border-color: var(--gold); }
+
+.car-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.car-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+
+.driver-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    background: #f8f9fa;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    width: fit-content;
+}
+.driver-img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
+.driver-text { font-size: 10px; font-weight: 700; color: #666; text-transform: uppercase; }
+
+/* ── MAP CONTAINER ── */
+.map-box {
+    width: 100%;
+    height: 180px;
+    background: #eee;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    background-image: url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/121.0509,14.6187,14,0/600x200?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTAwMHozN282YXp2mg');
+    background-size: cover;
+    background-position: center;
+}
+.map-overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'Montserrat';
+}
