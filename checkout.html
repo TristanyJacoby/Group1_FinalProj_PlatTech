@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arangkada – Payment & Receipt</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      /* ===== SHARED STYLES FROM signup.html ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --gold: #e5a020;
+        --gold-dark: #c88a10;
+        --black: #1a1a1a;
+        --white: #fff;
+        --text: #222;
+        --border: #e0e0e0;
+        --radius: 8px;
+        /* Original index.html brand colors for the card */
+        --card-blue: linear-gradient(135deg, #1a3a6c, #2d6ac4);
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        background: #faf6e1;
+        min-height: 100vh;
+      }
+
+      /* ── NAVBAR (Exactly from signup.html) ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: var(--white);
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+        padding: 14px 0;
+      }
+      .nav-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+      }
+      .logo img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--black);
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding-bottom: 3px;
+        border-bottom: 2px solid transparent;
+        transition: 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--gold);
+        border-bottom-color: var(--gold);
+      }
+
+      /* ── HAMBURGER & DROPDOWN (Exactly from signup.html) ── */
+      .hamburger-wrap {
+        position: relative;
+      }
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--black);
+        border-radius: 2px;
+        transition: 0.3s;
+      }
+      .hamburger.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+        background: var(--gold);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+        background: var(--gold);
+      }
+
+      .hamburger-dropdown {
+        display: none;
+        position: absolute;
+        top: calc(100% + 14px);
+        right: 0;
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+        min-width: 210px;
+        padding: 8px 0;
+        z-index: 1100;
+        border: 1px solid #f0f0f0;
+      }
+      .hamburger-dropdown.open {
+        display: block;
+        animation: dropIn 0.2s ease forwards;
+      }
+      .hamburger-dropdown a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 22px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--black);
+        border: none;
+        text-decoration: none;
+      }
+      .hamburger-dropdown a i {
+        color: var(--gold);
+        width: 16px;
+        text-align: center;
+      }
+      .hamburger-dropdown a:hover {
+        background: #fdf5e6;
+        color: var(--gold);
+      }
+      @keyframes dropIn {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── CONTENT LAYOUT ── */
+      .main-content {
+        margin-top: 100px;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+      }
+      .checkout-card {
+        background: var(--white);
+        width: 100%;
+        max-width: 850px;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        padding: 40px;
+      }
+      .payment-grid {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 40px;
+      }
+      h2 {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+
+      /* ── RESTORED ORIGINAL CREDIT CARD VISUAL ── */
+      .credit-card-visual {
+        background: var(--card-blue);
+        border-radius: 16px;
+        padding: 24px;
+        color: white;
+        height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 20px rgba(26, 58, 108, 0.2);
+      }
+      .credit-card-visual .number {
+        font-size: 18px;
+        letter-spacing: 3px;
+        font-family: monospace;
+        margin-top: 20px;
+      }
+      .credit-card-visual .brand {
+        font-size: 20px;
+        font-weight: 700;
+        font-style: italic;
+        text-align: right;
+      }
+      .chip {
+        width: 40px;
+        height: 30px;
+        background: #f0c040;
+        border-radius: 4px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      }
+
+      /* ── FORM FIELDS ── */
+      .form-field {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border: 1.5px solid #e0e0e0;
+        border-radius: var(--radius);
+        padding: 12px 16px;
+        background: #fafafa;
+        margin-bottom: 16px;
+      }
+      .field-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+      }
+      .btn-gold {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: var(--radius);
+        background: var(--gold);
+        color: var(--white);
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      /* ── RECEIPT ── */
+      #receiptSection {
+        display: none;
+        text-align: center;
+      }
+      .receipt-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+      }
+      .receipt-table th {
+        text-align: left;
+        padding: 12px;
+        background: #fdf5e6;
+      }
+      .receipt-table td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+      }
+
+      @media (max-width: 800px) {
+        .payment-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <div class="logo">
+          <img src="assets/yellow logo.png" />
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="booking.html">Book</a></li>
+          <li><a href="signup.html">Sign In</a></li>
+          <li class="hamburger-wrap">
+            <div class="hamburger" id="hamburger">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="hamburger-dropdown" id="hamburgerDropdown">
+              <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+              <a href="booking.html"
+                ><i class="fa-solid fa-car"></i> Book a Vehicle</a
+              >
+              <a href="signup.html"
+                ><i class="fa-solid fa-user-plus"></i> Sign Up</a
+              >
+              <div
+                style="height: 1px; background: #f0f0f0; margin: 6px 0"
+              ></div>
+              <a href="#"><i class="fa-solid fa-phone"></i> Contact Us</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="main-content">
+      <div id="paymentSection" class="checkout-card">
+        <h2>Secure Payment</h2>
+        <div class="payment-grid">
+          <div>
+            <div class="credit-card-visual">
+              <div class="chip"></div>
+              <div class="number" id="visual-card-num">**** **** **** ****</div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: flex-end;
+                "
+              >
+                <div>
+                  <div
+                    style="font-size: 10px; opacity: 0.8; margin-bottom: 4px"
+                  >
+                    CARD HOLDER
+                  </div>
+                  <div
+                    style="font-size: 14px; text-transform: uppercase"
+                    id="visual-card-name"
+                  >
+                    YOUR NAME
+                  </div>
+                </div>
+                <div class="brand">VISA</div>
+              </div>
+            </div>
+
+            <form id="paymentForm">
+              <div class="form-field">
+                <i class="fa-solid fa-user" style="color: var(--gold)"></i>
+                <input
+                  type="text"
+                  class="field-input"
+                  placeholder="Full Name on Card"
+                  id="input-name"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <i
+                  class="fa-solid fa-credit-card"
+                  style="color: var(--gold)"
+                ></i>
+                <input
+                  type="text"
+                  class="field-input"
+                  placeholder="0000 0000 0000 0000"
+                  id="input-card"
+                  maxlength="19"
+                  required
+                />
+              </div>
+              <div style="display: flex; gap: 10px">
+                <div class="form-field" style="flex: 1">
+                  <input
+                    type="text"
+                    class="field-input"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    required
+                  />
+                </div>
+                <div class="form-field" style="flex: 1">
+                  <input
+                    type="password"
+                    class="field-input"
+                    placeholder="CVV"
+                    maxlength="3"
+                    required
+                  />
+                </div>
+              </div>
+              <button type="submit" class="btn-gold">
+                Confirm & Pay ₱4,500.00
+              </button>
+            </form>
+          </div>
+
+          <div
+            style="
+              background: #fdf6e9;
+              padding: 25px;
+              border-radius: 12px;
+              border: 1px solid #e5a02022;
+            "
+          >
+            <h3
+              style="
+                font-family: &quot;Montserrat&quot;, sans-serif;
+                font-size: 15px;
+                margin-bottom: 20px;
+              "
+            >
+              Booking Summary
+            </h3>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                margin-bottom: 10px;
+              "
+            >
+              <span>Toyota Fortuner</span><span>₱3,500</span>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                margin-bottom: 10px;
+              "
+            >
+              <span>Driver (1 Day)</span><span>₱800</span>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                margin-bottom: 10px;
+              "
+            >
+              <span>Fees</span><span>₱200</span>
+            </div>
+            <hr
+              style="margin: 15px 0; border: 0; border-top: 1px solid #e5a02044"
+            />
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-weight: 800;
+                color: var(--gold);
+              "
+            >
+              <span>Total</span><span>₱4,500.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="receiptSection" class="checkout-card">
+        <i
+          class="fa-solid fa-circle-check"
+          style="color: #27ae60; font-size: 50px; margin-bottom: 20px"
+        ></i>
+        <h2>Booking Confirmed</h2>
+        <p>Your payment was successful. Enjoy your trip!</p>
+        <table class="receipt-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th style="text-align: right">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Toyota Fortuner Rental</td>
+              <td style="text-align: right">₱3,500.00</td>
+            </tr>
+            <tr>
+              <td>Driver & Insurance</td>
+              <td style="text-align: right">₱1,000.00</td>
+            </tr>
+            <tr style="font-weight: 800; color: var(--gold); font-size: 18px">
+              <td>Total Paid</td>
+              <td style="text-align: right">₱4,500.00</td>
+            </tr>
+          </tbody>
+        </table>
+        <button
+          class="btn-gold"
+          style="width: auto; padding: 12px 30px"
+          onclick="window.location.href = 'index.html'"
+        >
+          Back to Home
+        </button>
+      </div>
+    </div>
+
+    <script>
+      /* ── NAVBAR SCRIPT (Exactly from signup.html) ── */
+      const hb = document.getElementById("hamburger");
+      const dd = document.getElementById("hamburgerDropdown");
+      hb.addEventListener("click", (e) => {
+        e.stopPropagation();
+        hb.classList.toggle("open");
+        dd.classList.toggle("open");
+      });
+      document.addEventListener("click", () => {
+        hb.classList.remove("open");
+        dd.classList.remove("open");
+      });
+
+      /* ── CARD FORMATTING ── */
+      const cardInput = document.getElementById("input-card");
+      const nameInput = document.getElementById("input-name");
+
+      cardInput.addEventListener("input", function () {
+        let v = this.value.replace(/\D/g, "").slice(0, 16);
+        this.value = v.replace(/(.{4})/g, "$1 ").trim();
+        document.getElementById("visual-card-num").textContent =
+          this.value || "**** **** **** ****";
+      });
+
+      nameInput.addEventListener("input", function () {
+        document.getElementById("visual-card-name").textContent =
+          this.value || "YOUR NAME";
+      });
+
+      /* ── VIEW SWITCHING ── */
+      document
+        .getElementById("paymentForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          document.getElementById("paymentSection").style.display = "none";
+          document.getElementById("receiptSection").style.display = "block";
+          window.scrollTo(0, 0);
+        });
+    </script>
+  </body>
+</html>
