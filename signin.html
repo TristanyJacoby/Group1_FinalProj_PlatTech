@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arangkada – Join the Adventure</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --gold: #e5a020;
+        --gold-dark: #c88a10;
+        --black: #1a1a1a;
+        --white: #fff;
+        --text: #222;
+        --slide-speed: 0.9s;
+        --slide-curve: cubic-bezier(0.7, 0, 0.3, 1);
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        background: var(--white);
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* ── ORIGINAL NAVBAR (Retained Exactly) ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: var(--white);
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+        padding: 14px 0;
+      }
+
+      .nav-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+      }
+
+      .logo img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--black);
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding-bottom: 3px;
+        border-bottom: 2px solid transparent;
+        transition: 0.2s;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--gold);
+        border-bottom-color: var(--gold);
+      }
+
+      /* ── ORIGINAL HAMBURGER & DROPDOWN ── */
+      .hamburger-wrap {
+        position: relative;
+      }
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--black);
+        border-radius: 2px;
+        transition: 0.3s;
+      }
+      /* Animation for X */
+      .hamburger.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+        background: var(--gold);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+        background: var(--gold);
+      }
+
+      .hamburger-dropdown {
+        display: none;
+        position: absolute;
+        top: calc(100% + 14px);
+        right: 0;
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+        min-width: 210px;
+        padding: 8px 0;
+        z-index: 1100;
+        border: 1px solid #f0f0f0;
+      }
+      .hamburger-dropdown.open {
+        display: block;
+        animation: dropIn 0.2s ease forwards;
+      }
+      .hamburger-dropdown a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 22px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--black);
+        border: none;
+      }
+      .hamburger-dropdown a i {
+        color: var(--gold);
+        width: 16px;
+        text-align: center;
+      }
+      .hamburger-dropdown a:hover {
+        background: #fdf5e6;
+        color: var(--gold);
+        border: none;
+      }
+      @keyframes dropIn {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── SLIDING STAGE ── */
+      .stage {
+        flex: 1;
+        margin-top: 72px;
+        position: relative;
+        width: 100%;
+        display: flex;
+        overflow: hidden;
+      }
+      .panel {
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        transition: transform var(--slide-speed) var(--slide-curve);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+      }
+      .panel-brand {
+        left: 0;
+        z-index: 5;
+        background:
+          linear-gradient(rgba(229, 160, 32, 0.88), rgba(200, 138, 16, 0.95)),
+          url("https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1400&q=80")
+            center/cover;
+        color: var(--white);
+        text-align: center;
+      }
+      .panel-form {
+        right: 0;
+        z-index: 4;
+        background: var(--white);
+      }
+
+      /* Slide Logic */
+      .stage.signup-active .panel-brand {
+        transform: translateX(100%);
+      }
+      .stage.signup-active .panel-form {
+        transform: translateX(-100%);
+      }
+
+      /* Content UI */
+      .content-wrapper {
+        width: 100%;
+        max-width: 380px;
+      }
+      .panel-brand h1 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 42px;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+      }
+      .form-box h2 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 28px;
+        font-weight: 800;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+      }
+      .form-field {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border: 1.5px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        background: #fafafa;
+        margin-bottom: 16px;
+      }
+      .field-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+      }
+      .btn-gold {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        background: var(--gold);
+        color: var(--white);
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .form-links {
+        margin-top: 25px;
+        text-align: center;
+        font-size: 14px;
+      }
+      .form-links a {
+        color: var(--gold);
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .form-container {
+        position: absolute;
+        width: 100%;
+        max-width: 380px;
+        transition: opacity 0.4s ease;
+      }
+      .hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      @media (max-width: 850px) {
+        .stage {
+          flex-direction: column;
+          overflow-y: auto;
+        }
+        .panel {
+          width: 100%;
+          position: relative;
+          height: auto;
+          transform: none !important;
+        }
+        .panel-brand {
+          padding: 60px 20px;
+          order: 1;
+        }
+        .panel-form {
+          order: 2;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <div class="logo">
+          <img src="assets/yellow logo.png" alt="Arangkada Logo" />
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="booking.html">Book</a></li>
+          <li><a href="signup.html" class="active">Sign In</a></li>
+          <li class="hamburger-wrap">
+            <div class="hamburger" id="hamburger">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="hamburger-dropdown" id="hamburgerDropdown">
+              <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+              <a href="booking.html"
+                ><i class="fa-solid fa-car"></i> Book a Vehicle</a
+              >
+              <a href="signup.html"
+                ><i class="fa-solid fa-user-plus"></i> Sign Up</a
+              >
+              <div
+                style="height: 1px; background: #f0f0f0; margin: 6px 0"
+              ></div>
+              <a href="#"><i class="fa-solid fa-phone"></i> Contact Us</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="stage" id="stage">
+      <div class="panel panel-brand">
+        <div class="content-wrapper">
+          <h1 id="brandTitle">Welcome Back!</h1>
+          <p id="brandText">
+            Log in to keep the engine running and start your next adventure.
+          </p>
+        </div>
+      </div>
+
+      <div class="panel panel-form">
+        <div id="loginSection" class="form-container">
+          <div class="form-box">
+            <h2>Sign In</h2>
+            <form>
+              <div class="form-field">
+                <i class="fa-solid fa-envelope" style="color: var(--gold)"></i>
+                <input
+                  type="email"
+                  class="field-input"
+                  placeholder="Email Address"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <i class="fa-solid fa-lock" style="color: var(--gold)"></i>
+                <input
+                  type="password"
+                  class="field-input"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-gold">Sign In</button>
+            </form>
+            <div class="form-links">
+              <p>
+                Don't have an account?
+                <a onclick="toggleMode()">Create Account</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div id="signupSection" class="form-container hidden">
+          <div class="form-box">
+            <h2>Create Account</h2>
+            <form>
+              <div class="form-field">
+                <i class="fa-solid fa-user" style="color: var(--gold)"></i>
+                <input
+                  type="text"
+                  class="field-input"
+                  placeholder="Full Name"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <i class="fa-solid fa-envelope" style="color: var(--gold)"></i>
+                <input
+                  type="email"
+                  class="field-input"
+                  placeholder="Email Address"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <i class="fa-solid fa-lock" style="color: var(--gold)"></i>
+                <input
+                  type="password"
+                  class="field-input"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-gold">Sign Up</button>
+            </form>
+            <div class="form-links">
+              <p>Already a member? <a onclick="toggleMode()">Sign In</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Hamburger Logic
+      const hb = document.getElementById("hamburger");
+      const dd = document.getElementById("hamburgerDropdown");
+      hb.addEventListener("click", (e) => {
+        e.stopPropagation();
+        hb.classList.toggle("open");
+        dd.classList.toggle("open");
+      });
+      document.addEventListener("click", () => {
+        hb.classList.remove("open");
+        dd.classList.remove("open");
+      });
+
+      // Slide Logic
+      function toggleMode() {
+        const stage = document.getElementById("stage");
+        const login = document.getElementById("loginSection");
+        const signup = document.getElementById("signupSection");
+        const brandTitle = document.getElementById("brandTitle");
+        const brandText = document.getElementById("brandText");
+
+        stage.classList.toggle("signup-active");
+
+        setTimeout(() => {
+          if (stage.classList.contains("signup-active")) {
+            login.classList.add("hidden");
+            signup.classList.remove("hidden");
+            brandTitle.innerText = "Join Us!";
+            brandText.innerText = "Create an account to experience Arangkada.";
+          } else {
+            signup.classList.add("hidden");
+            login.classList.remove("hidden");
+            brandTitle.innerText = "Welcome Back!";
+            brandText.innerText =
+              "Log in to keep the engine running and start your next adventure.";
+          }
+        }, 350);
+      }
+    </script>
+  </body>
+</html>
