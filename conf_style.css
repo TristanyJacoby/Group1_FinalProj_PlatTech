@@ -1,0 +1,140 @@
+:root {
+    --brand-orange: #E6A04D;
+    --soft-orange: #FFF6EB;
+    --border-orange: #FDE8D1;
+}
+
+body { font-family: 'Segoe UI', sans-serif; }
+
+.text-orange { color: var(--brand-orange); }
+
+.info-card {
+    background-color: var(--soft-orange);
+    border: 1.5px solid var(--border-orange);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.price-bg { background-color: #FFF2E0; }
+
+.show-more {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--brand-orange);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-pay {
+    background-color: var(--brand-orange);
+    color: white;
+    border-radius: 50px;
+    font-weight: bold;
+    border: none;
+    transition: 0.3s ease;
+}
+
+.btn-pay:hover {
+    background-color: #d18d3c;
+    transform: translateY(-2px);
+}
+
+.x-small { font-size: 11px; }
+/* Fix for text bleeding */
+.info-card {
+    word-wrap: break-word; /* Forces long text/emails to wrap if needed */
+    overflow: hidden;      /* Keeps everything inside the rounded corners */
+}
+
+/* Prevent long emails from breaking the layout */
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Slightly smaller font for the labels to create visual hierarchy */
+.x-small {
+    font-size: 0.75rem; 
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Ensure the main container has enough breathing room on the sides */
+.main-wrapper {
+    max-width: 1100px;
+    margin: auto;
+}
+/* Navigation Link Reset */
+.nav-link-custom {
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none !important; /* Removes the blue underline */
+    letter-spacing: 0.5px;
+    transition: 0.3s;
+}
+
+.rating-badge {
+    background-color: #FFF3E0; /* Soft orange background */
+    color: #E6A04D;           /* Darker orange text */
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.breadcrumb-custom {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chevron::before {
+    content: '>';
+    font-size: 12px;
+    margin: 0 5px;
+}
+
+.hamburger-menu span {
+    height: 2px;
+    width: 24px;
+    background-color: #E6A04D;
+    display: block;
+    margin: 4px 0;
+}
+
+/* Logo Styling */
+.navbar-brand img {
+    height: 35px; /* Adjust this to match your Figma design */
+    width: auto;
+    display: block;
+    filter: none !important; /* Ensures the gold color stays vibrant */
+}
+
+/* Optional: Removes padding from the brand link to keep it tight in the corner */
+.navbar-brand {
+    padding: 0;
+    margin-right: 20px;
+}
+/* Gallery Image Styling */
+.img-gallery-main { 
+    width: 100%; 
+    height: 320px; 
+    border-radius: 10px; 
+    object-fit: cover; 
+    background: #fafafa; 
+}
+
+.img-gallery-sub { 
+    width: 100%; 
+    height: 155px; 
+    border-radius: 10px; 
+    object-fit: cover; 
+    background: #fafafa; 
+}
+

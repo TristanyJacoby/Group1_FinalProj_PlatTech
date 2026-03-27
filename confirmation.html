@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation Page - Arangkada</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-gold: #e2b07e;
+            --brand-orange: #e67e22;
+            --card-bg: #fffcf7;
+            --card-border: #f9e3c4;
+            --text-muted-gray: #757575;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .navbar-brand img { 
+         height: 35px !important; 
+         width: auto !important; 
+         filter: none !important; 
+        }
+        .nav-link {
+            color: var(--brand-gold) !important;
+            font-weight: 600; font-size: 13px; letter-spacing: 1px;
+        }
+        .menu-icon { width: 30px; height: 2px; background-color: var(--brand-gold); position: relative; }
+        .menu-icon::before, .menu-icon::after {
+            content: ''; width: 30px; height: 2px; background-color: var(--brand-gold);
+            position: absolute; left: 0;
+        }
+        .menu-icon::before { top: -8px; }
+        .menu-icon::after { top: 8px; }
+
+        /*  Title, & Rating */
+        .breadcrumb-item, .breadcrumb-item a { color: #333; text-decoration: none; font-size: 13px; }
+        .breadcrumb-item.active { color: #ccc; }
+        h1 { font-weight: bold; font-size: 32px; margin-bottom: 2px; }
+        .rating-badge { background-color: #fef5e7; color: var(--brand-orange); padding: 2px 10px; border-radius: 12px; font-size: 13px; font-weight: bold; }
+        .location-text { color: #ccc; font-size: 13px; margin-left: 10px; }
+
+        /* Photo Gallery  */
+        .img-gallery-main { width: 100%; height: 320px; border-radius: 10px; object-fit: contain; background: #fafafa; }
+        .img-gallery-sub { width: 100%; height: 155px; border-radius: 10px; object-fit: cover; background: #fafafa; }
+
+        /* Info Cards & Text */
+        .info-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+        }
+        .card-header-text { color: var(--brand-orange); font-weight: bold; font-size: 16px; margin-bottom: 15px; }
+        
+        /* Sub-sections within card (like "Executive Interior") */
+        .sub-header-text { font-weight: bold; font-size: 14px; margin-bottom: 5px; }
+        .card-body-text { font-size: 13px; color: var(--text-muted-gray); line-height: 1.6; }
+
+        /* Transmission Section */
+        .small-icon-text { font-size: 13px; color: #333; }
+        .toggle-label { font-size: 11px; color: var(--text-muted-gray); }
+
+        /*  Driver's Details - Specific Styles  */
+        .driver-info-container p { margin-bottom: 1px; } /* sa vertical spacing */
+        .driver-text-left, .driver-text-right {
+            font-size: 13px; /* Smaller font size same sa Figma */
+            color: var(--text-muted-gray);
+        }
+
+        /*  Buttons  */
+        .show-more-btn { color: var(--brand-orange); text-decoration: none; font-size: 0.85rem; cursor: pointer; border: none; background: none; padding: 0; }
+        .show-more-btn::after { content: ' ⌵'; font-size: 0.8em; }
+        
+        .btn-proceed {
+            background-color: #f1b472; /* Lighter beige same sa Figma */
+            color: white; border: none; padding: 14px; width: 100%; max-width: 280px;
+            border-radius: 25px; font-weight: bold; display: block; margin: 30px auto 0 auto;
+        }
+        .btn-proceed:hover { background-color: var(--brand-orange); }
+
+        /* Hidden content hshshshs */
+        .extra-content { display: none; padding-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+    <img src="/Users/shanicekyle/Downloads/arangkada logo.png" alt="Arangkada Logo" class="brand-logo"></a>
+            <div class="ms-auto d-flex align-items-center gap-4">
+                <div class="d-none d-md-flex gap-4">
+                    <a class="nav-link" href="#">HOME</a>
+                    <a class="nav-link" href="#">BOOK</a>
+                    <a class="nav-link" href="#">SIGN UP</a>
+                </div>
+                <div class="menu-icon"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 mb-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">home</a></li>
+                <li class="breadcrumb-item"><a href="#">manila</a></li>
+                <li class="breadcrumb-item active" aria-current="page">manila</li>
+            </ol>
+        </nav>
+
+        <h1>Toyota Camry 2024</h1>
+        <div class="d-flex align-items-center mb-4">
+            <span class="rating-badge">★ 4.8</span>
+            <span class="location-text">manila</span>
+        </div>
+
+        <div class="row g-3 mb-5">
+           <div class="col-lg-7">
+    <img src="/Users/shanicekyle/Downloads/maincarpic.png" class="img-gallery-main" alt="Toyota Camry Main View">
+</div>
+
+<div class="col-lg-5">
+    <div class="row g-2">
+        <div class="col-12">
+            <img src="/Users/shanicekyle/Downloads/enginepic.png" class="img-gallery-sub" alt="Engine">
+        </div>
+        <div class="col-6">
+            <img src="/Users/shanicekyle/Downloads/frontpic.png" class="img-gallery-sub" alt="Rear View">
+        </div>
+        <div class="col-6">
+            <img src="/Users/shanicekyle/Downloads/sidepic.png" class="img-gallery-sub" alt="Interior Side View">
+        </div>
+    </div>
+</div>
+
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="info-card">
+                    <div class="card-header-text">Details</div>
+                    <div class="sub-header-text">Executive Interior & Comfort</div>
+                    <ul class="card-body-text mb-2">
+                        <li>Vehicle Overview: Toyota Camry 2.5V HEV (2024).</li>
+                        <li>The 2024 Toyota Camry (2.5V HEV) is the ultimate executive sedan, blending sophisticated design with cutting-edge Hybrid technology. Known for its whisper-quiet cabin and smooth ride, it is the premier choice for business leaders, VIP airport transfers, and special occasions. Experience a "Masterpiece of Form and Function" that offers unparalleled rear-seat comfort and world-class safety.</li>
+                        
+                        <div class="mt-4"></div>
+                        <div class="sub-header-text">Car Features</div>
+                          <li>Engine & Efficiency: 2.5L Hybrid Dynamic Force Engine (Fuel efficient and eco-friendly).</li>
+                          <li>VIP Rear Comfort: Power-reclining rear seats with a dedicated touch-control panel in the armrest for A/C and audio.</li>
+                          <li>Premium Sound: 9-Speaker JBL Premium Audio System for a concert-like experience.</li>
+                          <li>Climate Control: 3-Zone Automatic Climate Control (Separate settings for Driver, Passenger, and Rear).</li>
+                          <li>Interior Luxury: Smooth Black Leather upholstery with 8-way power-adjustable seating.</li>
+                          <li>Safety: Equipped with Toyota Safety Sense (TSS), featuring Pre-Collision System, Dynamic Radar Cruise Control, and a 360-degree Panoramic View Monitor.</li>
+                          <li>Connectivity: 9-inch Touchscreen with Wireless Apple CarPlay and Android Auto.</li>
+                      </ul>  
+                   
+                    <div id="details-extra" class="extra-content card-body-text">
+                        Nanos™ X Air Purification System. Power Rear Window Sunshade. Smooth Leather Upholstery.
+                    </div>
+                    <button class="show-more-btn" onclick="toggle('details-extra', this)">Show More Details</button>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header-text">Terms & Conditions</div>
+                    <div class="sub-header-text"> Eligibility & Documentation
+                    </div>
+                    <ul class="card-body-text mb-2">
+     <li>Professional Drivers: All vehicles are operated by a Company-assigned driver. Our drivers hold a valid Philippine Professional Driver’s License and have undergone background checks.</li>
+     <li>Passenger Documentation: The primary renter must provide a valid Government-Issued ID (e.g., Passport, UMID, or Driver’s License) at the time of booking or pickup for security verification.</li>
+     <li>Restricted Operation: Under no circumstances is the Client or any passenger permitted to operate the vehicle. Doing so voids all insurance coverage and will result in immediate termination of service without a refund.</li>
+
+</ul>
+
+<div id="terms-extra" class="extra-content card-body-text">
+    
+    <div class="sub-header-text mt-3">Fuel, Insurance & Financials</div>
+    <ul>
+        <li> Fuel Policy (Full-to-Full): The vehicle is provided with a full tank of fuel. The Client is responsible for returning the vehicle with a full tank at the end of the trip. If the vehicle is not refilled, a refueling service fee plus the cost of fuel will be charged.</li>
+        <li>Insurance Details: Full Comprehensive Insurance is included in the rental price. This covers third-party liability and passenger personal accident insurance during the rental period.</li>
+        <li>Cancellation Policy: * 48+ hours notice: Full Refund.  24-48 hours notice: 50% Refund. Under 24 hours: No Refund.</li>
+    </ul>
+
+    <div class="sub-header-text mt-3">Emergency Protocols & Safety</div>
+    <ul>
+        <li>Mechanical Breakdown: If the vehicle breaks down, the Company will provide a replacement vehicle and driver. If a replacement is unavailable within [X] hours, a prorated refund will be issued.</li>
+        <li>Accidents & Medical: In any road accident or passenger medical emergency, the driver is authorized to prioritize safety and head to the nearest medical facility.</li>
+        <li>Accidents & Medical: In any road accident or passenger medical emergency, the driver is authorized to prioritize safety and head to the nearest medical facility.</li>
+        <li>24/7 Support: For emergencies, contact our hotline at (+63 9786860688).</li>
+    </ul>
+
+    <div class="sub-header-text mt-3">Driver Welfare & Conduct</div>
+    <ul>
+        <li>Service Hours: A standard day is [X] hours. Overtime is charged at [Amount]/hour.</li>
+        <li>Rest Periods: To prevent driver fatigue, a 30-minute break is required every 4 hours. For multi-day trips, drivers must have 10 hours of rest between shifts.</li>
+        <li>Lodging & Meals: For out-of-town/overnight trips, the Client shall provide the driver with basic accommodation and a meal allowance of [Amount]/day, unless otherwise stated in the package.</li>
+        <li>Safety Authority: The driver reserves the right to refuse routes that are dangerous (e.g., severe flooding or off-road terrain not suited for the vehicle).</li>
+    </ul>
+
+    <div class="sub-header-text mt-3">Usage & Prohibitions</div>
+    <ul>
+        <li>Capacity: Total passengers must not exceed the vehicle's seating limit.</li>
+        <li>Behavior: Smoking and illegal substances are strictly prohibited inside the vehicle. Verbal or physical abuse toward the driver will result in immediate cancellation of the trip.</li>
+        <li>Cleaning Fee: A fee of [Amount] will be charged for any interior soiling (spills, stains, etc.) requiring professional cleaning.</li>
+
+    </ul>
+
+                      <div class="sub-header-text mt-3">General Provisions</div>
+                      <ul>
+                       <li>Substitution: The Company may substitute the vehicle or driver...</li>
+                       <li>Non-Circumvention: Clients may not book assigned drivers privately.</li>
+                      </ul>
+                      </div>
+
+                        
+                        <div id="terms-extra" class="extra-content card-body-text">
+                        Fuel Policy: Full-to-Full. Insurance Details: Full coverage included.
+                    </div>
+                    <button class="show-more-btn" onclick="toggle('terms-extra', this)">Show More Details</button>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="info-card">
+                    <div class="card-header-text">Transmission</div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <span class="fw-bold d-block">Automatic</span>
+                            <span class="toggle-label">Easier to drive</span>
+                        </div>
+                        <div class="text-muted small">Manual <input type="checkbox" checked disabled> Auto</div>
+                    </div>
+                    <div class="row text-center border-top pt-2">
+                        <div class="col-6 small-icon-text border-end">Seats: 5</div>
+                        <div class="col-6 small-icon-text">Fuel Tank: 50 Liters (Gasoline)</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header-text">Price Summary</div>
+                    <div class="d-flex justify-content-between align-items-center card-body-text">
+                        <span>Daily Rate:</span>
+                        <span class="fw-bold">P 5,000.00 / day</span>
+                    </div>
+                </div>
+
+                <div class="info-card driver-info-container">
+                    <div class="card-header-text">Driver's Details</div>
+                    
+                    <div class="d-flex justify-content-between mb-1">
+                        <p class="driver-text-left" style="font-weight: 500;">Romolo Ordoñez</p>
+                        <p class="driver-text-right">Pro license</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <p class="driver-text-left">+63 9010101010</p>
+                        <p class="driver-text-right">romolo_ordoñez@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+    <div class="card-header-text">Car Rules</div>
+    <ul class="card-body-text mb-0">
+        <li>Chauffeur Only: This vehicle is strictly chauffeur-driven. For insurance and safety reasons, clients are not permitted to operate the vehicle.</li>
+        <li>No Smoking: A strictly smoke-free and vape-free environment. A cleaning fee of ₱10,000 will be charged if smoking is detected.</li>
+        <li>Passenger Capacity: Strictly limited to a maximum of cars capacity (excluding the driver) for safety and comfort.</li>
+        <li>Food & Drinks: Light snacks and bottled water are allowed. Please avoid strong-smelling foods or colored drinks that may stain the leather.</li>
+        <li>Territory Limits: Travel is permitted within [Region, e.g., Luzon]. Off-road driving, unpaved trails, or entering flooded areas is strictly prohibited.</li>
+        <li>Pet Policy: Pets are allowed only if kept in a secure pet carrier or wearing diapers. A detailing fee applies for any pet hair or odors left behind.</li>
+        <li>Fuel Policy: Full-to-Full. The vehicle is released with a full tank and must be returned full, or a refueling service fee will apply.</li>
+
+    </ul>
+</div>
+
+                <button class="btn btn-proceed">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggle(id, btn) {
+            const el = document.getElementById(id);
+            if (el.style.display === "block") {
+                el.style.display = "none";
+                btn.innerText = "Show More Details";
+                btn.classList.remove('active');
+            } else {
+                el.style.display = "block";
+                btn.innerText = "Show Less Details";
+                btn.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
