@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arangkada - Super Admin Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
 :root {
   --gold: #F5A623;
@@ -33,6 +34,8 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
 .btn-outline { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); }
 .btn-outline:hover { background: var(--gold); color: white; }
 .btn-dark { background: var(--dark); color: white; }
+.btn-danger { background: var(--red); color: white; }
+.btn-danger:hover { background: #c0392b; }
 .btn-sm { padding: 8px 18px; font-size: 13px; }
 .btn-xs { padding: 6px 14px; font-size: 12px; }
 .form-control { width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: var(--font-body); font-size: 14px; color: var(--dark); background: #FAFAF8; transition: border-color 0.2s; outline: none; }
@@ -48,11 +51,12 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
 #toast.error { background: var(--red); }
 .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
 .modal-overlay.open { display: flex; }
-.modal { background: white; border-radius: 20px; padding: 32px; max-width: 480px; width: 90%; box-shadow: 0 24px 64px rgba(0,0,0,0.15); animation: modalIn 0.3s ease; }
+.modal { background: white; border-radius: 20px; padding: 32px; max-width: 520px; width: 94%; box-shadow: 0 24px 64px rgba(0,0,0,0.15); animation: modalIn 0.3s ease; max-height: 92vh; overflow-y: auto; }
+.modal-wide { max-width: 640px; }
 @keyframes modalIn { from { transform: scale(0.95) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 .modal-title { font-family: var(--font-head); font-size: 22px; margin-bottom: 8px; }
 .modal-sub { color: var(--light-text); font-size: 14px; margin-bottom: 24px; }
-.modal-close { float: right; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--light-text); }
+.modal-close { float: right; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--light-text); line-height: 1; }
 .form-group { margin-bottom: 16px; }
 .form-label { display: block; font-size: 12px; font-weight: 500; color: var(--mid); margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -90,7 +94,7 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
 .stat-widget { background: white; border-radius: var(--radius); padding: 22px; border: 1px solid var(--border); box-shadow: var(--card-shadow); transition: transform 0.2s, box-shadow 0.2s; }
 .stat-widget:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,0,0,0.1); }
 .stat-widget .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.stat-widget .icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.stat-widget .icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .stat-widget .icon.orange { background: var(--gold-pale); color: var(--gold); }
 .stat-widget .icon.blue { background: #e8f0fe; color: #4285f4; }
 .stat-widget .icon.green { background: #d4edda; color: var(--green); }
@@ -113,7 +117,7 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
 .action-dots:hover { background: #f0f0f0; }
 .recent-bookings-mini .booking-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; transition: background 0.2s; border-radius: 8px; }
 .recent-bookings-mini .booking-row:last-child { border-bottom: none; }
-.user-avatar-sm { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.user-avatar-sm { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .booking-row-info .name { font-size: 13px; font-weight: 500; }
 .booking-row-info .detail { font-size: 12px; color: var(--light-text); }
 .booking-row-amount { margin-left: auto; font-weight: 600; font-size: 13px; }
@@ -123,11 +127,51 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
 .role-super { background: #f3e5f5; color: #7b1fa2; }
 .role-admin { background: var(--gold-pale); color: var(--gold); }
 .role-user { background: #e8f5e9; color: #388e3c; }
-.welcome-btn { position: fixed; bottom: 24px; right: 24px; z-index: 100; background: var(--green); color: white; padding: 14px 22px; border-radius: 50px; font-size: 14px; font-weight: 500; box-shadow: 0 6px 24px rgba(39,174,96,0.4); cursor: pointer; border: none; font-family: var(--font-body); animation: popIn 0.5s ease 0.5s both; }
-@keyframes popIn { from { transform: scale(0.8) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 .search-wrap { position: relative; }
 .search-wrap .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--light-text); font-size: 15px; pointer-events: none; }
 .search-wrap .form-control { padding-left: 38px; }
+/* Dropdown */
+.dropdown-wrap { position: relative; display: inline-block; }
+.dropdown-menu { position: absolute; top: calc(100% + 6px); left: 0; background: white; border: 1.5px solid var(--border); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); min-width: 160px; z-index: 100; overflow: hidden; display: none; }
+.dropdown-menu.open { display: block; animation: dropIn 0.18s ease; }
+@keyframes dropIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+.dropdown-item { padding: 10px 16px; font-size: 13px; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; gap: 8px; }
+.dropdown-item:hover { background: var(--gold-bg); color: var(--gold); }
+.dropdown-item.active-filter { background: var(--gold-pale); color: var(--gold); font-weight: 500; }
+/* Confirm modal */
+.confirm-modal .modal-title { color: var(--red); }
+/* Profile detail area */
+.user-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.user-detail-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold); }
+.user-detail-info .uname { font-size: 18px; font-weight: 600; }
+.user-detail-info .uemail { font-size: 13px; color: var(--light-text); }
+.info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; }
+.info-row:last-child { border-bottom: none; }
+.info-row .info-key { color: var(--light-text); }
+.info-row .info-val { font-weight: 500; }
+/* Booking detail */
+.booking-detail-section { margin-bottom: 20px; }
+.booking-detail-section h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--light-text); margin-bottom: 12px; }
+/* Settings tabs */
+.settings-tabs { display: flex; gap: 4px; background: #f0ede6; border-radius: 10px; padding: 4px; margin-bottom: 24px; }
+.settings-tab { padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--mid); transition: all 0.2s; }
+.settings-tab.active { background: white; color: var(--dark); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.settings-pane { display: none; }
+.settings-pane.active { display: block; }
+.toggle-wrap { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #f5f5f5; }
+.toggle-wrap:last-child { border-bottom: none; }
+.toggle-info .t-label { font-size: 14px; font-weight: 500; }
+.toggle-info .t-desc { font-size: 12px; color: var(--light-text); }
+.toggle { position: relative; width: 42px; height: 24px; background: #ddd; border-radius: 50px; cursor: pointer; transition: background 0.3s; flex-shrink: 0; }
+.toggle.on { background: var(--green); }
+.toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; background: white; border-radius: 50%; transition: left 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+.toggle.on::after { left: 21px; }
+/* Action button group */
+.action-group { display: flex; gap: 6px; }
+/* Empty state */
+.empty-state { text-align: center; padding: 48px 24px; color: var(--light-text); }
+.empty-state i { font-size: 40px; margin-bottom: 12px; opacity: 0.3; }
+.empty-state p { font-size: 14px; }
 </style>
 </head>
 <body>
@@ -135,7 +179,7 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
   <aside class="admin-sidebar">
     <div class="admin-sidebar-logo">
       <h2>Arangkada</h2>
-      <p id="admin-role-label">Super Admin Panel</p>
+      <p>Super Admin Panel</p>
     </div>
     <div class="admin-nav-section">Main</div>
     <div class="admin-nav-item active" onclick="switchTab(this, 'admin-overview')">
@@ -150,15 +194,15 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
     <div class="admin-nav-item" onclick="switchTab(this, 'admin-users')">
       <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Users
     </div>
-    <div class="admin-nav-section" id="admin-super-section">Super Admin</div>
-    <div class="admin-nav-item" id="admin-roles-link" onclick="switchTab(this, 'admin-roles')">
+    <div class="admin-nav-section">Super Admin</div>
+    <div class="admin-nav-item" onclick="switchTab(this, 'admin-roles')">
       <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></span> Roles &amp; Access
     </div>
-    <div class="admin-nav-item" id="admin-settings-link" onclick="switchTab(this, 'admin-settings')">
+    <div class="admin-nav-item" onclick="switchTab(this, 'admin-settings')">
       <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Settings
     </div>
     <div class="admin-nav-section">Account</div>
-    <div class="admin-nav-item" onclick="signOut()">
+    <div class="admin-nav-item" onclick="confirmSignOut()">
       <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Sign Out
     </div>
   </aside>
@@ -172,8 +216,8 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
       <div class="admin-user">
         <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Admin">
         <div class="admin-user-info">
-          <div class="name" id="admin-user-name">Super Admin</div>
-          <div class="role" id="admin-user-role">Super Admin</div>
+          <div class="name">Super Admin</div>
+          <div class="role">Super Admin</div>
         </div>
       </div>
     </div>
@@ -182,19 +226,19 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
     <div id="admin-overview" class="admin-tab-pane active">
       <div class="stats-grid">
         <div class="stat-widget">
-          <div class="top"><div><div class="label">Total Bookings</div><div class="value">1,284</div></div><div class="icon orange">📋</div></div>
+          <div class="top"><div><div class="label">Total Bookings</div><div class="value">1,284</div></div><div class="icon orange"><i class="fas fa-clipboard-list"></i></div></div>
           <div class="change up">↑ 12.5% from last month</div>
         </div>
         <div class="stat-widget">
-          <div class="top"><div><div class="label">Active Vehicles</div><div class="value">48</div></div><div class="icon blue">🚗</div></div>
+          <div class="top"><div><div class="label">Active Vehicles</div><div class="value">48</div></div><div class="icon blue"><i class="fas fa-car"></i></div></div>
           <div class="change up">↑ 3 new this month</div>
         </div>
         <div class="stat-widget">
-          <div class="top"><div><div class="label">Total Revenue</div><div class="value">₱2.4M</div></div><div class="icon green">💰</div></div>
+          <div class="top"><div><div class="label">Total Revenue</div><div class="value">₱2.4M</div></div><div class="icon green"><i class="fas fa-dollar-sign"></i></div></div>
           <div class="change up">↑ 8.2% from last month</div>
         </div>
         <div class="stat-widget">
-          <div class="top"><div><div class="label">Pending Returns</div><div class="value">7</div></div><div class="icon red">⏳</div></div>
+          <div class="top"><div><div class="label">Pending Returns</div><div class="value">7</div></div><div class="icon red"><i class="fas fa-clock"></i></div></div>
           <div class="change down">↓ 2 overdue</div>
         </div>
       </div>
@@ -227,18 +271,32 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
     <!-- BOOKINGS TAB -->
     <div id="admin-bookings" class="admin-tab-pane">
       <div class="flex-between mb-16">
-        <div class="search-wrap" style="max-width:280px; flex:1;"><span class="search-icon">🔍</span><input type="text" class="form-control" placeholder="Search bookings..." oninput="filterTable('bookings-tbody', this.value)"></div>
-        <div style="display:flex; gap:8px;"><select class="form-control" style="width:140px;"><option>All Status</option><option>Confirmed</option><option>Pending</option><option>Completed</option><option>Cancelled</option></select><button class="btn btn-primary btn-sm">+ New Booking</button></div>
+        <div class="search-wrap" style="max-width:280px; flex:1;"><i class="search-icon fas fa-search"></i><input type="text" class="form-control" placeholder="Search bookings..." oninput="filterTable('bookings-tbody', this.value)"></div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <div class="dropdown-wrap" id="booking-status-dropdown">
+            <button class="btn btn-outline btn-sm" onclick="toggleDropdown('booking-status-dropdown')">
+              <i class="fas fa-filter" style="font-size:11px;"></i> <span id="booking-filter-label">All Status</span> <i class="fas fa-chevron-down" style="font-size:10px;"></i>
+            </button>
+            <div class="dropdown-menu" id="booking-status-menu">
+              <div class="dropdown-item active-filter" onclick="filterBookings('All')"><i class="fas fa-list" style="color:var(--mid);font-size:11px;"></i> All Status</div>
+              <div class="dropdown-item" onclick="filterBookings('Confirmed')"><i class="fas fa-check-circle" style="color:var(--green);font-size:11px;"></i> Confirmed</div>
+              <div class="dropdown-item" onclick="filterBookings('Pending')"><i class="fas fa-clock" style="color:var(--gold);font-size:11px;"></i> Pending</div>
+              <div class="dropdown-item" onclick="filterBookings('Completed')"><i class="fas fa-check-double" style="color:var(--mid);font-size:11px;"></i> Completed</div>
+              <div class="dropdown-item" onclick="filterBookings('Cancelled')"><i class="fas fa-times-circle" style="color:var(--red);font-size:11px;"></i> Cancelled</div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('new-booking-modal')">+ New Booking</button>
+        </div>
       </div>
       <div class="admin-table-wrap">
         <table class="admin-table">
           <thead><tr><th>ID</th><th>Customer</th><th>Vehicle</th><th>Dates</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="bookings-tbody">
-            <tr><td>#B-1001</td><td>Shanice Dacian</td><td>Toyota Innova</td><td>4/1 – 4/7</td><td>₱21,000</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn btn-xs btn-outline">View</button></td></tr>
-            <tr><td>#B-1002</td><td>Robert Villar</td><td>Toyota Camry</td><td>3/3 – 3/8</td><td>₱25,000</td><td><span class="badge badge-gray">Completed</span></td><td><button class="btn btn-xs btn-outline">View</button></td></tr>
-            <tr><td>#B-1003</td><td>Marco Santos</td><td>Honda City</td><td>3/10 – 3/13</td><td>₱6,600</td><td><span class="badge badge-gold">Pending</span></td><td><button class="btn btn-xs btn-outline">View</button></td></tr>
-            <tr><td>#B-1004</td><td>Ana Reyes</td><td>Mercedes CLA</td><td>3/15 – 3/17</td><td>₱12,000</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn btn-xs btn-outline">View</button></td></tr>
-            <tr><td>#B-1005</td><td>Jose Cruz</td><td>Toyota Vios</td><td>3/20 – 3/22</td><td>₱3,400</td><td><span class="badge badge-red">Cancelled</span></td><td><button class="btn btn-xs btn-outline">View</button></td></tr>
+            <tr data-status="Confirmed"><td>#B-1001</td><td>Shanice Dacian</td><td>Toyota Innova</td><td>4/1 – 4/7</td><td>₱21,000</td><td><span class="badge badge-green">Confirmed</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="viewBooking('B-1001')">View</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteBooking('B-1001', this)">Delete</button></td></tr>
+            <tr data-status="Completed"><td>#B-1002</td><td>Robert Villar</td><td>Toyota Camry</td><td>3/3 – 3/8</td><td>₱25,000</td><td><span class="badge badge-gray">Completed</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="viewBooking('B-1002')">View</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteBooking('B-1002', this)">Delete</button></td></tr>
+            <tr data-status="Pending"><td>#B-1003</td><td>Marco Santos</td><td>Honda City</td><td>3/10 – 3/13</td><td>₱6,600</td><td><span class="badge badge-gold">Pending</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="viewBooking('B-1003')">View</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteBooking('B-1003', this)">Delete</button></td></tr>
+            <tr data-status="Confirmed"><td>#B-1004</td><td>Ana Reyes</td><td>Mercedes CLA</td><td>3/15 – 3/17</td><td>₱12,000</td><td><span class="badge badge-green">Confirmed</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="viewBooking('B-1004')">View</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteBooking('B-1004', this)">Delete</button></td></tr>
+            <tr data-status="Cancelled"><td>#B-1005</td><td>Jose Cruz</td><td>Toyota Vios</td><td>3/20 – 3/22</td><td>₱3,400</td><td><span class="badge badge-red">Cancelled</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="viewBooking('B-1005')">View</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteBooking('B-1005', this)">Delete</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -247,18 +305,18 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
     <!-- VEHICLES TAB -->
     <div id="admin-vehicles" class="admin-tab-pane">
       <div class="flex-between mb-16">
-        <div class="search-wrap" style="max-width:280px; flex:1;"><span class="search-icon">🔍</span><input type="text" class="form-control" placeholder="Search vehicles..." oninput="filterTable('vehicles-tbody', this.value)"></div>
-        <button class="btn btn-primary btn-sm" onclick="openAddVehicleModal()">+ Add Vehicle</button>
+        <div class="search-wrap" style="max-width:280px; flex:1;"><i class="search-icon fas fa-search"></i><input type="text" class="form-control" placeholder="Search vehicles..." oninput="filterTable('vehicles-tbody', this.value)"></div>
+        <button class="btn btn-primary btn-sm" onclick="openModal('add-vehicle-modal')">+ Add Vehicle</button>
       </div>
       <div class="admin-table-wrap">
         <table class="admin-table">
           <thead><tr><th>Image</th><th>Model</th><th>Type</th><th>Transmission</th><th>Seats</th><th>Rate/Day</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="vehicles-tbody">
-            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=120&q=70" alt=""></td><td>Toyota Camry 2024</td><td>Luxury</td><td>Automatic</td><td>5</td><td>₱5,000</td><td><span class="badge badge-green">Available</span></td><td><button class="btn btn-xs btn-outline">Edit</button></td></tr>
-            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=120&q=70" alt=""></td><td>Toyota Innova 2026</td><td>People Carrier</td><td>Automatic</td><td>8</td><td>₱3,500</td><td><span class="badge badge-red">Rented</span></td><td><button class="btn btn-xs btn-outline">Edit</button></td></tr>
-            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=120&q=70" alt=""></td><td>Toyota Vios</td><td>Economy</td><td>CVT</td><td>5</td><td>₱1,700</td><td><span class="badge badge-green">Available</span></td><td><button class="btn btn-xs btn-outline">Edit</button></td></tr>
-            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=120&q=70" alt=""></td><td>Honda City</td><td>Compact</td><td>CVT</td><td>5</td><td>₱2,200</td><td><span class="badge badge-gold">Maintenance</span></td><td><button class="btn btn-xs btn-outline">Edit</button></td></tr>
-            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=120&q=70" alt=""></td><td>Mercedes-Benz CLA</td><td>Luxury</td><td>Automatic</td><td>5</td><td>₱6,000</td><td><span class="badge badge-red">Rented</span></td><td><button class="btn btn-xs btn-outline">Edit</button></td></tr>
+            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=120&q=70" alt=""></td><td>Toyota Camry 2024</td><td>Luxury</td><td>Automatic</td><td>5</td><td>₱5,000</td><td><span class="badge badge-green">Available</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="editVehicle(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td></tr>
+            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=120&q=70" alt=""></td><td>Toyota Innova 2026</td><td>People Carrier</td><td>Automatic</td><td>8</td><td>₱3,500</td><td><span class="badge badge-red">Rented</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="editVehicle(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td></tr>
+            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=120&q=70" alt=""></td><td>Toyota Vios</td><td>Economy</td><td>CVT</td><td>5</td><td>₱1,700</td><td><span class="badge badge-green">Available</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="editVehicle(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td></tr>
+            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=120&q=70" alt=""></td><td>Honda City</td><td>Compact</td><td>CVT</td><td>5</td><td>₱2,200</td><td><span class="badge badge-gold">Maintenance</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="editVehicle(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td></tr>
+            <tr><td><img class="car-thumb" src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=120&q=70" alt=""></td><td>Mercedes-Benz CLA</td><td>Luxury</td><td>Automatic</td><td>5</td><td>₱6,000</td><td><span class="badge badge-red">Rented</span></td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="editVehicle(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -267,17 +325,37 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
     <!-- USERS TAB -->
     <div id="admin-users" class="admin-tab-pane">
       <div class="flex-between mb-16">
-        <div class="search-wrap" style="max-width:280px; flex:1;"><span class="search-icon">🔍</span><input type="text" class="form-control" placeholder="Search users..." oninput="filterTable('users-tbody', this.value)"></div>
-        <button class="btn btn-primary btn-sm">+ Add User</button>
+        <div class="search-wrap" style="max-width:280px; flex:1;"><i class="search-icon fas fa-search"></i><input type="text" class="form-control" placeholder="Search users..." oninput="filterTable('users-tbody', this.value)"></div>
+        <button class="btn btn-primary btn-sm" onclick="openModal('add-user-modal')">+ Add User</button>
       </div>
       <div class="admin-table-wrap">
         <table class="admin-table">
           <thead><tr><th>User</th><th>Email</th><th>Phone</th><th>Total Bookings</th><th>Role</th><th>Actions</th></tr></thead>
           <tbody id="users-tbody">
-            <tr><td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=70" alt="">Shanice Dacian</div></td><td>shanice@email.com</td><td>+63 919 111 0001</td><td>27</td><td><span class="badge badge-green" style="background:#e8f5e9;color:#388e3c;">User</span></td><td><button class="btn btn-xs btn-outline">Manage</button></td></tr>
-            <tr><td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&q=70" alt="">Robert Villar</div></td><td>robert@email.com</td><td>+63 919 222 0002</td><td>14</td><td><span class="badge badge-green" style="background:#e8f5e9;color:#388e3c;">User</span></td><td><button class="btn btn-xs btn-outline">Manage</button></td></tr>
-            <tr><td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=70" alt="">Marco Santos</div></td><td>marco@email.com</td><td>+63 919 333 0003</td><td>8</td><td><span class="badge badge-green" style="background:#e8f5e9;color:#388e3c;">User</span></td><td><button class="btn btn-xs btn-outline">Manage</button></td></tr>
-            <tr><td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70" alt="">Ana Reyes</div></td><td>ana@email.com</td><td>+63 919 444 0004</td><td>5</td><td><span class="badge badge-green" style="background:#e8f5e9;color:#388e3c;">User</span></td><td><button class="btn btn-xs btn-outline">Manage</button></td></tr>
+            <tr data-img="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=70" data-phone="+63 919 111 0001" data-bookings="27" data-joined="Jan 12, 2024">
+              <td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=70" alt="">Shanice Dacian</div></td>
+              <td>shanice@email.com</td><td>+63 919 111 0001</td><td>27</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#388e3c;">User</span></td>
+              <td class="action-group"><button class="btn btn-xs btn-outline" onclick="manageUser(this)">Manage</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td>
+            </tr>
+            <tr data-img="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&q=70" data-phone="+63 919 222 0002" data-bookings="14" data-joined="Feb 3, 2024">
+              <td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&q=70" alt="">Robert Villar</div></td>
+              <td>robert@email.com</td><td>+63 919 222 0002</td><td>14</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#388e3c;">User</span></td>
+              <td class="action-group"><button class="btn btn-xs btn-outline" onclick="manageUser(this)">Manage</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td>
+            </tr>
+            <tr data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=70" data-phone="+63 919 333 0003" data-bookings="8" data-joined="Mar 5, 2024">
+              <td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=70" alt="">Marco Santos</div></td>
+              <td>marco@email.com</td><td>+63 919 333 0003</td><td>8</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#388e3c;">User</span></td>
+              <td class="action-group"><button class="btn btn-xs btn-outline" onclick="manageUser(this)">Manage</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td>
+            </tr>
+            <tr data-img="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70" data-phone="+63 919 444 0004" data-bookings="5" data-joined="Apr 1, 2024">
+              <td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70" alt="">Ana Reyes</div></td>
+              <td>ana@email.com</td><td>+63 919 444 0004</td><td>5</td>
+              <td><span class="badge" style="background:#e8f5e9;color:#388e3c;">User</span></td>
+              <td class="action-group"><button class="btn btn-xs btn-outline" onclick="manageUser(this)">Manage</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -285,14 +363,14 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
 
     <!-- ROLES TAB -->
     <div id="admin-roles" class="admin-tab-pane admin-roles-table">
-      <div class="flex-between mb-16"><h3 class="bold">Roles &amp; Permissions</h3><button class="btn btn-primary btn-sm">+ Add Role</button></div>
+      <div class="flex-between mb-16"><h3 class="bold">Roles &amp; Permissions</h3><button class="btn btn-primary btn-sm" onclick="openModal('add-role-modal')">+ Add Role</button></div>
       <div class="admin-table-wrap">
         <table class="admin-table">
           <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Access Level</th><th>Actions</th></tr></thead>
-          <tbody>
-            <tr><td>Super Admin</td><td>superadmin@arangkada.ph</td><td><span class="role-badge role-super">Super Admin</span></td><td>Full Access</td><td><button class="btn btn-xs btn-outline">Edit</button></td></tr>
-            <tr><td>Admin User</td><td>admin@arangkada.ph</td><td><span class="role-badge role-admin">Admin</span></td><td>Manage Bookings &amp; Vehicles</td><td><button class="btn btn-xs btn-outline">Edit</button></td></tr>
-            <tr><td>Shanice Dacian</td><td>shanice@email.com</td><td><span class="role-badge role-user">User</span></td><td>View &amp; Book</td><td><button class="btn btn-xs btn-outline">Edit</button></td></tr>
+          <tbody id="roles-tbody">
+            <tr><td>Super Admin</td><td>superadmin@arangkada.ph</td><td><span class="role-badge role-super">Super Admin</span></td><td>Full Access</td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="editRole(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td></tr>
+            <tr><td>Admin User</td><td>admin@arangkada.ph</td><td><span class="role-badge role-admin">Admin</span></td><td>Manage Bookings &amp; Vehicles</td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="editRole(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td></tr>
+            <tr><td>Shanice Dacian</td><td>shanice@email.com</td><td><span class="role-badge role-user">User</span></td><td>View &amp; Book</td><td class="action-group"><button class="btn btn-xs btn-outline" onclick="editRole(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -300,106 +378,719 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--dark);
 
     <!-- SETTINGS TAB -->
     <div id="admin-settings" class="admin-tab-pane">
-      <div style="max-width:560px;">
-        <h3 class="bold mb-16">General Settings</h3>
-        <div class="admin-table-wrap" style="margin-bottom:20px;">
-          <div class="form-group"><label class="form-label">Business Name</label><input type="text" class="form-control" value="Arangkada Car Rental"></div>
-          <div class="form-group"><label class="form-label">Contact Email</label><input type="email" class="form-control" value="info@arangkada.ph"></div>
-          <div class="form-group"><label class="form-label">Contact Number</label><input type="text" class="form-control" value="+63 919 000 0000"></div>
-          <div class="form-group"><label class="form-label">Default Currency</label><select class="form-control"><option>Philippine Peso (₱)</option><option>US Dollar ($)</option></select></div>
-          <button class="btn btn-primary" onclick="showToast('Settings saved! ✅', 'success')">Save Changes</button>
+      <div style="max-width:600px;">
+        <div class="settings-tabs">
+          <div class="settings-tab active" onclick="switchSettingsTab(this,'settings-general')">General</div>
+          <div class="settings-tab" onclick="switchSettingsTab(this,'settings-notifications')">Notifications</div>
+          <div class="settings-tab" onclick="switchSettingsTab(this,'settings-security')">Security</div>
+          <div class="settings-tab" onclick="switchSettingsTab(this,'settings-billing')">Billing</div>
+        </div>
+
+        <!-- General -->
+        <div id="settings-general" class="settings-pane active">
+          <div class="admin-table-wrap" style="margin-bottom:20px;">
+            <h3 style="margin-bottom:20px;">Business Information</h3>
+            <div class="form-group"><label class="form-label">Business Name</label><input type="text" class="form-control" id="s-biz-name" value="Arangkada Car Rental"></div>
+            <div class="form-group"><label class="form-label">Contact Email</label><input type="email" class="form-control" id="s-email" value="info@arangkada.ph"></div>
+            <div class="form-group"><label class="form-label">Contact Number</label><input type="text" class="form-control" id="s-phone" value="+63 919 000 0000"></div>
+            <div class="form-group"><label class="form-label">Address</label><input type="text" class="form-control" id="s-address" value="123 EDSA, Quezon City, Metro Manila"></div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Default Currency</label><select class="form-control" id="s-currency"><option>Philippine Peso (₱)</option><option>US Dollar ($)</option></select></div>
+              <div class="form-group"><label class="form-label">Timezone</label><select class="form-control"><option>Asia/Manila (GMT+8)</option><option>UTC</option></select></div>
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div id="settings-notifications" class="settings-pane">
+          <div class="admin-table-wrap">
+            <h3 style="margin-bottom:20px;">Notification Preferences</h3>
+            <div class="toggle-wrap"><div class="toggle-info"><div class="t-label">New Booking Alerts</div><div class="t-desc">Get notified when a new booking is made</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-wrap"><div class="toggle-info"><div class="t-label">Payment Received</div><div class="t-desc">Alerts when a payment is confirmed</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-wrap"><div class="toggle-info"><div class="t-label">Overdue Returns</div><div class="t-desc">Alerts for vehicles not returned on time</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-wrap"><div class="toggle-info"><div class="t-label">Maintenance Reminders</div><div class="t-desc">Vehicle maintenance schedule reminders</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-wrap"><div class="toggle-info"><div class="t-label">Weekly Report</div><div class="t-desc">Receive a weekly summary via email</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div style="margin-top:20px;"><button class="btn btn-primary" onclick="saveSettings()">Save Preferences</button></div>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div id="settings-security" class="settings-pane">
+          <div class="admin-table-wrap" style="margin-bottom:20px;">
+            <h3 style="margin-bottom:20px;">Change Password</h3>
+            <div class="form-group"><label class="form-label">Current Password</label><input type="password" class="form-control" placeholder="••••••••"></div>
+            <div class="form-group"><label class="form-label">New Password</label><input type="password" class="form-control" id="s-new-pass" placeholder="••••••••"></div>
+            <div class="form-group"><label class="form-label">Confirm New Password</label><input type="password" class="form-control" id="s-confirm-pass" placeholder="••••••••"></div>
+            <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
+          </div>
+          <div class="admin-table-wrap">
+            <h3 style="margin-bottom:20px;">Two-Factor Authentication</h3>
+            <div class="toggle-wrap"><div class="toggle-info"><div class="t-label">Enable 2FA</div><div class="t-desc">Require OTP on each login</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-wrap"><div class="toggle-info"><div class="t-label">Login Notifications</div><div class="t-desc">Email alert on new sign-in</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          </div>
+        </div>
+
+        <!-- Billing -->
+        <div id="settings-billing" class="settings-pane">
+          <div class="admin-table-wrap">
+            <h3 style="margin-bottom:20px;">Billing & Plan</h3>
+            <div class="info-row"><span class="info-key">Current Plan</span><span class="info-val"><span class="badge badge-gold">Business Pro</span></span></div>
+            <div class="info-row"><span class="info-key">Billing Cycle</span><span class="info-val">Monthly</span></div>
+            <div class="info-row"><span class="info-key">Next Billing Date</span><span class="info-val">April 30, 2026</span></div>
+            <div class="info-row"><span class="info-key">Amount</span><span class="info-val">₱2,499 / month</span></div>
+            <div class="info-row"><span class="info-key">Payment Method</span><span class="info-val">Visa ending in 4242</span></div>
+            <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn btn-primary btn-sm" onclick="showToast('Redirecting to billing portal…')">Manage Plan</button>
+              <button class="btn btn-outline btn-sm" onclick="showToast('Invoice downloaded!', 'success')">Download Invoice</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </main>
 </div>
 
+<!-- ============================================================
+     MODALS
+     ============================================================ -->
+
 <!-- ADD VEHICLE MODAL -->
 <div id="add-vehicle-modal" class="modal-overlay">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-vehicle-modal')">×</button>
-    <div class="modal-title">Add New Vehicle</div>
+    <div class="modal-title" id="vehicle-modal-title">Add New Vehicle</div>
     <div class="modal-sub">Fill in the details to add a vehicle to the fleet.</div>
-    <div class="form-group"><label class="form-label">Vehicle Model</label><input type="text" class="form-control" placeholder="e.g. Toyota Camry 2025"></div>
+    <div class="form-group"><label class="form-label">Vehicle Model</label><input type="text" id="v-model" class="form-control" placeholder="e.g. Toyota Camry 2025"></div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Type</label><select class="form-control"><option>Luxury</option><option>Economy</option><option>Compact</option><option>People Carrier</option></select></div>
-      <div class="form-group"><label class="form-label">Rate / Day (₱)</label><input type="number" class="form-control" placeholder="5000"></div>
+      <div class="form-group"><label class="form-label">Type</label><select id="v-type" class="form-control"><option>Luxury</option><option>Economy</option><option>Compact</option><option>People Carrier</option><option>SUV</option></select></div>
+      <div class="form-group"><label class="form-label">Rate / Day (₱)</label><input type="number" id="v-rate" class="form-control" placeholder="5000"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Transmission</label><select class="form-control"><option>Automatic</option><option>Manual</option><option>CVT</option></select></div>
-      <div class="form-group"><label class="form-label">Seats</label><input type="number" class="form-control" placeholder="5" min="2" max="12"></div>
+      <div class="form-group"><label class="form-label">Transmission</label><select id="v-trans" class="form-control"><option>Automatic</option><option>Manual</option><option>CVT</option></select></div>
+      <div class="form-group"><label class="form-label">Seats</label><input type="number" id="v-seats" class="form-control" placeholder="5" min="2" max="12"></div>
     </div>
-    <div class="form-group"><label class="form-label">Status</label><select class="form-control"><option>Available</option><option>Rented</option><option>Maintenance</option></select></div>
+    <div class="form-group"><label class="form-label">Status</label><select id="v-status" class="form-control"><option>Available</option><option>Rented</option><option>Maintenance</option></select></div>
     <div style="display:flex; gap:10px; margin-top:8px;">
-      <button class="btn btn-primary" style="flex:1;" onclick="saveVehicle()">Add Vehicle</button>
+      <button class="btn btn-primary" style="flex:1;" id="vehicle-save-btn" onclick="saveVehicle()">Add Vehicle</button>
       <button class="btn btn-outline" style="flex:1;" onclick="closeModal('add-vehicle-modal')">Cancel</button>
     </div>
   </div>
 </div>
 
+<!-- NEW BOOKING MODAL -->
+<div id="new-booking-modal" class="modal-overlay">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('new-booking-modal')">×</button>
+    <div class="modal-title">New Booking</div>
+    <div class="modal-sub">Create a new vehicle booking for a customer.</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Customer Name</label><input type="text" id="b-customer" class="form-control" placeholder="Full name"></div>
+      <div class="form-group"><label class="form-label">Contact Number</label><input type="text" id="b-contact" class="form-control" placeholder="+63 9xx xxx xxxx"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Vehicle</label>
+      <select id="b-vehicle" class="form-control">
+        <option value="">— Select a vehicle —</option>
+        <option>Toyota Camry 2024 (₱5,000/day)</option>
+        <option>Toyota Innova 2026 (₱3,500/day)</option>
+        <option>Toyota Vios (₱1,700/day)</option>
+        <option>Honda City (₱2,200/day)</option>
+        <option>Mercedes-Benz CLA (₱6,000/day)</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Start Date</label><input type="date" id="b-start" class="form-control"></div>
+      <div class="form-group"><label class="form-label">End Date</label><input type="date" id="b-end" class="form-control"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select id="b-status" class="form-control">
+        <option>Confirmed</option><option>Pending</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Notes (optional)</label><textarea class="form-control" id="b-notes" rows="2" placeholder="Any special instructions…" style="resize:vertical;"></textarea></div>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="saveBooking()">Create Booking</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('new-booking-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW BOOKING MODAL -->
+<div id="view-booking-modal" class="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('view-booking-modal')">×</button>
+    <div class="modal-title" id="vb-id">Booking #B-1001</div>
+    <div class="modal-sub">Booking details and status.</div>
+    <div class="booking-detail-section">
+      <h4>Customer</h4>
+      <div class="info-row"><span class="info-key">Name</span><span class="info-val" id="vb-customer">—</span></div>
+      <div class="info-row"><span class="info-key">Contact</span><span class="info-val" id="vb-contact">—</span></div>
+    </div>
+    <div class="booking-detail-section">
+      <h4>Booking</h4>
+      <div class="info-row"><span class="info-key">Vehicle</span><span class="info-val" id="vb-vehicle">—</span></div>
+      <div class="info-row"><span class="info-key">Dates</span><span class="info-val" id="vb-dates">—</span></div>
+      <div class="info-row"><span class="info-key">Total</span><span class="info-val text-gold" id="vb-total">—</span></div>
+      <div class="info-row"><span class="info-key">Status</span><span class="info-val" id="vb-status">—</span></div>
+    </div>
+    <div class="form-group mt-16">
+      <label class="form-label">Update Status</label>
+      <select id="vb-new-status" class="form-control">
+        <option>Confirmed</option><option>Pending</option><option>Completed</option><option>Cancelled</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="updateBookingStatus()">Update Status</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('view-booking-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD USER MODAL -->
+<div id="add-user-modal" class="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('add-user-modal')">×</button>
+    <div class="modal-title">Add New User</div>
+    <div class="modal-sub">Create a new user account.</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">First Name</label><input type="text" id="u-fname" class="form-control" placeholder="Juan"></div>
+      <div class="form-group"><label class="form-label">Last Name</label><input type="text" id="u-lname" class="form-control" placeholder="Dela Cruz"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="u-email" class="form-control" placeholder="juan@email.com"></div>
+    <div class="form-group"><label class="form-label">Phone Number</label><input type="text" id="u-phone" class="form-control" placeholder="+63 9xx xxx xxxx"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Role</label><select id="u-role" class="form-control"><option>User</option><option>Admin</option><option>Super Admin</option></select></div>
+      <div class="form-group"><label class="form-label">Password</label><input type="password" id="u-pass" class="form-control" placeholder="••••••••"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="saveUser()">Add User</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('add-user-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- MANAGE USER MODAL -->
+<div id="manage-user-modal" class="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('manage-user-modal')">×</button>
+    <div class="modal-title">Manage User</div>
+    <div class="user-detail-header">
+      <img class="user-detail-avatar" id="mu-avatar" src="" alt="">
+      <div class="user-detail-info">
+        <div class="uname" id="mu-name">—</div>
+        <div class="uemail" id="mu-email">—</div>
+      </div>
+    </div>
+    <div class="info-row"><span class="info-key">Phone</span><span class="info-val" id="mu-phone">—</span></div>
+    <div class="info-row"><span class="info-key">Total Bookings</span><span class="info-val" id="mu-bookings">—</span></div>
+    <div class="info-row"><span class="info-key">Member Since</span><span class="info-val" id="mu-joined">—</span></div>
+    <div class="form-group mt-16">
+      <label class="form-label">Change Role</label>
+      <select id="mu-role" class="form-control">
+        <option>User</option><option>Admin</option><option>Super Admin</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Account Status</label>
+      <select id="mu-acc-status" class="form-control">
+        <option>Active</option><option>Suspended</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="saveManageUser()">Save Changes</button>
+      <button class="btn btn-danger btn-sm" onclick="confirmDeleteCurrentUser()">Suspend</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('manage-user-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD ROLE MODAL -->
+<div id="add-role-modal" class="modal-overlay">
+  <div class="modal" id="add-role-modal-inner">
+    <button class="modal-close" onclick="closeModal('add-role-modal')">×</button>
+    <div class="modal-title" id="role-modal-title">Add New Role</div>
+    <div class="modal-sub">Define access and permissions for this role.</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Full Name</label><input type="text" id="r-name" class="form-control" placeholder="e.g. Fleet Manager"></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" id="r-email" class="form-control" placeholder="email@arangkada.ph"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Role Level</label>
+      <select id="r-role" class="form-control">
+        <option value="User">User – View &amp; Book</option>
+        <option value="Admin">Admin – Manage Bookings &amp; Vehicles</option>
+        <option value="Super Admin">Super Admin – Full Access</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Permissions</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" id="perm-bookings" checked> Manage Bookings</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" id="perm-vehicles" checked> Manage Vehicles</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" id="perm-users"> Manage Users</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" id="perm-reports"> View Reports</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" id="perm-settings"> System Settings</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;"><input type="checkbox" id="perm-roles"> Manage Roles</label>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-primary" style="flex:1;" id="role-save-btn" onclick="saveRole()">Add Role</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('add-role-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL -->
+<div id="confirm-modal" class="modal-overlay">
+  <div class="modal confirm-modal" style="max-width:380px;">
+    <button class="modal-close" onclick="closeModal('confirm-modal')">×</button>
+    <div class="modal-title" id="confirm-title">Confirm Delete</div>
+    <p style="font-size:14px;color:var(--mid);margin-bottom:24px;" id="confirm-msg">Are you sure you want to delete this item? This action cannot be undone.</p>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-danger" style="flex:1;" id="confirm-action-btn" onclick="">Confirm</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('confirm-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast">Message here</div>
-<button class="welcome-btn" onclick="showToast('Welcome back! 👋', 'success')">Welcome back! 👋</button>
 
 <script>
-  const tabTitles = {
-    'admin-overview': ['Overview', 'Welcome back, Admin'],
-    'admin-bookings': ['Bookings', 'Manage all bookings'],
-    'admin-vehicles': ['Vehicles', 'Fleet management'],
-    'admin-users': ['Users', 'Manage registered users'],
-    'admin-roles': ['Roles & Access', 'Manage permissions'],
-    'admin-settings': ['Settings', 'System configuration'],
-  };
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let _pendingDeleteRow = null;
+let _pendingDeleteBookingId = null;
+let _editingVehicleRow = null;
+let _editingRoleRow = null;
+let _managingUserRow = null;
+let _currentViewBookingRow = null;
+let bookingCounter = 1006;
 
-  function switchTab(el, tabId) {
-    document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
-    document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.remove('active'));
-    el.classList.add('active');
-    const pane = document.getElementById(tabId);
-    if (pane) pane.classList.add('active');
-    if (tabTitles[tabId]) {
-      document.getElementById('admin-page-title').textContent = tabTitles[tabId][0];
-      document.getElementById('admin-page-sub').textContent = tabTitles[tabId][1];
-    }
-  }
+const tabTitles = {
+  'admin-overview': ['Overview', 'Welcome back, Admin'],
+  'admin-bookings': ['Bookings', 'Manage all bookings'],
+  'admin-vehicles': ['Vehicles', 'Fleet management'],
+  'admin-users': ['Users', 'Manage registered users'],
+  'admin-roles': ['Roles & Access', 'Manage permissions'],
+  'admin-settings': ['Settings', 'System configuration'],
+};
 
-  function showToast(msg, type = '') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'show' + (type ? ' ' + type : '');
-    setTimeout(() => { t.className = ''; }, 3000);
+// ─── TAB SWITCHING ───────────────────────────────────────────────────────────
+function switchTab(el, tabId) {
+  document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  const pane = document.getElementById(tabId);
+  if (pane) pane.classList.add('active');
+  if (tabTitles[tabId]) {
+    document.getElementById('admin-page-title').textContent = tabTitles[tabId][0];
+    document.getElementById('admin-page-sub').textContent = tabTitles[tabId][1];
   }
+  closeAllDropdowns();
+}
 
-  function openAddVehicleModal() {
-    document.getElementById('add-vehicle-modal').classList.add('open');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('open');
-  }
-  document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', function(e) {
-      if (e.target === this) closeModal(this.id);
-    });
+function switchSettingsTab(el, paneId) {
+  document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.settings-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+// ─── MODAL HELPERS ───────────────────────────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) closeModal(this.id);
   });
+});
 
-  function saveVehicle() {
-    closeModal('add-vehicle-modal');
-    showToast('Vehicle added successfully! ✅', 'success');
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show' + (type ? ' ' + type : '');
+  setTimeout(() => { t.className = ''; }, 3000);
+}
+
+// ─── DROPDOWN ────────────────────────────────────────────────────────────────
+function toggleDropdown(wrapperId) {
+  const menu = document.getElementById(wrapperId).querySelector('.dropdown-menu');
+  const isOpen = menu.classList.contains('open');
+  closeAllDropdowns();
+  if (!isOpen) menu.classList.add('open');
+}
+function closeAllDropdowns() {
+  document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('open'));
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.dropdown-wrap')) closeAllDropdowns();
+});
+
+// ─── BOOKINGS FILTER ─────────────────────────────────────────────────────────
+function filterBookings(status) {
+  const rows = document.querySelectorAll('#bookings-tbody tr');
+  rows.forEach(row => {
+    row.style.display = (status === 'All' || row.dataset.status === status) ? '' : 'none';
+  });
+  document.getElementById('booking-filter-label').textContent = status === 'All' ? 'All Status' : status;
+  document.querySelectorAll('#booking-status-menu .dropdown-item').forEach(item => {
+    item.classList.toggle('active-filter', item.textContent.trim() === (status === 'All' ? 'All Status' : status));
+  });
+  closeAllDropdowns();
+}
+
+// ─── SEARCH FILTER ───────────────────────────────────────────────────────────
+function filterTable(tbodyId, query) {
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  const rows = tbody.querySelectorAll('tr');
+  const q = query.toLowerCase();
+  rows.forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+// ─── VEHICLES ────────────────────────────────────────────────────────────────
+function saveVehicle() {
+  const model = document.getElementById('v-model').value.trim();
+  const type  = document.getElementById('v-type').value;
+  const rate  = document.getElementById('v-rate').value;
+  const trans = document.getElementById('v-trans').value;
+  const seats = document.getElementById('v-seats').value;
+  const status = document.getElementById('v-status').value;
+
+  if (!model || !rate || !seats) { showToast('Please fill in all required fields.', 'error'); return; }
+
+  const badgeClass = status === 'Available' ? 'badge-green' : status === 'Rented' ? 'badge-red' : 'badge-gold';
+
+  if (_editingVehicleRow) {
+    const cells = _editingVehicleRow.querySelectorAll('td');
+    cells[1].textContent = model;
+    cells[2].textContent = type;
+    cells[3].textContent = trans;
+    cells[4].textContent = seats;
+    cells[5].textContent = '₱' + Number(rate).toLocaleString();
+    cells[6].innerHTML = `<span class="badge ${badgeClass}">${status}</span>`;
+    _editingVehicleRow = null;
+    document.getElementById('vehicle-modal-title').textContent = 'Add New Vehicle';
+    document.getElementById('vehicle-save-btn').textContent = 'Add Vehicle';
+    showToast('Vehicle updated successfully!', 'success');
+  } else {
+    const tbody = document.getElementById('vehicles-tbody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><img class="car-thumb" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=120&q=70" alt=""></td>
+      <td>${model}</td><td>${type}</td><td>${trans}</td><td>${seats}</td>
+      <td>₱${Number(rate).toLocaleString()}</td>
+      <td><span class="badge ${badgeClass}">${status}</span></td>
+      <td class="action-group"><button class="btn btn-xs btn-outline" onclick="editVehicle(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td>`;
+    tbody.appendChild(tr);
+    showToast('Vehicle added successfully!', 'success');
   }
 
-  function filterTable(tbodyId, query) {
-    const tbody = document.getElementById(tbodyId);
-    if (!tbody) return;
-    const rows = tbody.querySelectorAll('tr');
-    const q = query.toLowerCase();
-    rows.forEach(row => {
-      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
-    });
+  ['v-model','v-rate','v-seats'].forEach(id => document.getElementById(id).value = '');
+  closeModal('add-vehicle-modal');
+}
+
+function editVehicle(btn) {
+  const row = btn.closest('tr');
+  _editingVehicleRow = row;
+  const cells = row.querySelectorAll('td');
+  document.getElementById('v-model').value  = cells[1].textContent;
+  document.getElementById('v-type').value   = cells[2].textContent;
+  document.getElementById('v-trans').value  = cells[3].textContent;
+  document.getElementById('v-seats').value  = cells[4].textContent;
+  document.getElementById('v-rate').value   = cells[5].textContent.replace(/[₱,]/g,'');
+  const statusText = cells[6].querySelector('.badge').textContent.trim();
+  document.getElementById('v-status').value = statusText;
+  document.getElementById('vehicle-modal-title').textContent = 'Edit Vehicle';
+  document.getElementById('vehicle-save-btn').textContent = 'Save Changes';
+  openModal('add-vehicle-modal');
+}
+
+// ─── BOOKINGS ─────────────────────────────────────────────────────────────────
+const bookingData = {
+  'B-1001': { customer:'Shanice Dacian', contact:'+63 919 111 0001', vehicle:'Toyota Innova', dates:'Apr 1 – Apr 7', total:'₱21,000', status:'Confirmed' },
+  'B-1002': { customer:'Robert Villar',  contact:'+63 919 222 0002', vehicle:'Toyota Camry',  dates:'Mar 3 – Mar 8', total:'₱25,000', status:'Completed' },
+  'B-1003': { customer:'Marco Santos',   contact:'+63 919 333 0003', vehicle:'Honda City',    dates:'Mar 10 – Mar 13', total:'₱6,600', status:'Pending' },
+  'B-1004': { customer:'Ana Reyes',      contact:'+63 919 444 0004', vehicle:'Mercedes CLA',  dates:'Mar 15 – Mar 17', total:'₱12,000', status:'Confirmed' },
+  'B-1005': { customer:'Jose Cruz',      contact:'+63 919 555 0005', vehicle:'Toyota Vios',   dates:'Mar 20 – Mar 22', total:'₱3,400', status:'Cancelled' },
+};
+
+function viewBooking(id) {
+  const b = bookingData[id];
+  if (!b) return;
+  document.getElementById('vb-id').textContent      = 'Booking #' + id;
+  document.getElementById('vb-customer').textContent = b.customer;
+  document.getElementById('vb-contact').textContent  = b.contact;
+  document.getElementById('vb-vehicle').textContent  = b.vehicle;
+  document.getElementById('vb-dates').textContent    = b.dates;
+  document.getElementById('vb-total').textContent    = b.total;
+  document.getElementById('vb-status').innerHTML     = statusBadge(b.status);
+  document.getElementById('vb-new-status').value     = b.status;
+  _currentViewBookingId = id;
+  openModal('view-booking-modal');
+}
+let _currentViewBookingId = null;
+
+function updateBookingStatus() {
+  const newStatus = document.getElementById('vb-new-status').value;
+  if (_currentViewBookingId && bookingData[_currentViewBookingId]) {
+    bookingData[_currentViewBookingId].status = newStatus;
+  }
+  // Update row in table
+  const rows = document.querySelectorAll('#bookings-tbody tr');
+  rows.forEach(row => {
+    if (row.querySelector('td').textContent === '#' + _currentViewBookingId) {
+      const badgeCell = row.querySelectorAll('td')[5];
+      badgeCell.innerHTML = statusBadge(newStatus);
+      row.dataset.status = newStatus;
+    }
+  });
+  document.getElementById('vb-status').innerHTML = statusBadge(newStatus);
+  showToast('Status updated to ' + newStatus, 'success');
+  closeModal('view-booking-modal');
+}
+
+function statusBadge(status) {
+  const map = { Confirmed:'badge-green', Completed:'badge-gray', Pending:'badge-gold', Cancelled:'badge-red' };
+  return `<span class="badge ${map[status]||'badge-gray'}">${status}</span>`;
+}
+
+function saveBooking() {
+  const customer = document.getElementById('b-customer').value.trim();
+  const vehicle  = document.getElementById('b-vehicle').value;
+  const start    = document.getElementById('b-start').value;
+  const end      = document.getElementById('b-end').value;
+  const status   = document.getElementById('b-status').value;
+
+  if (!customer || !vehicle || !start || !end) { showToast('Please fill all required fields.', 'error'); return; }
+
+  const id = 'B-' + bookingCounter++;
+  const startD = new Date(start), endD = new Date(end);
+  if (endD <= startD) { showToast('End date must be after start date.', 'error'); return; }
+
+  const days  = Math.ceil((endD - startD) / 86400000);
+  const rate  = parseInt((vehicle.match(/₱([\d,]+)/) || ['','0'])[1].replace(',',''));
+  const total = '₱' + (days * rate).toLocaleString();
+  const dateStr = `${startD.getMonth()+1}/${startD.getDate()} – ${endD.getMonth()+1}/${endD.getDate()}`;
+  const vName = vehicle.split(' (')[0];
+  const badgeClass = status === 'Confirmed' ? 'badge-green' : 'badge-gold';
+
+  bookingData[id.replace('B-','')] = { customer, contact: document.getElementById('b-contact').value, vehicle: vName, dates: dateStr, total, status };
+
+  const tbody = document.getElementById('bookings-tbody');
+  const tr = document.createElement('tr');
+  tr.dataset.status = status;
+  tr.innerHTML = `
+    <td>#${id}</td><td>${customer}</td><td>${vName}</td><td>${dateStr}</td><td>${total}</td>
+    <td><span class="badge ${badgeClass}">${status}</span></td>
+    <td class="action-group"><button class="btn btn-xs btn-outline" onclick="viewBooking('${id.replace('B-','')}')">View</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteBooking('${id.replace('B-','')}', this)">Delete</button></td>`;
+  tbody.prepend(tr);
+
+  ['b-customer','b-contact','b-notes','b-start','b-end'].forEach(i => document.getElementById(i).value = '');
+  document.getElementById('b-vehicle').value = '';
+  closeModal('new-booking-modal');
+  showToast('Booking created successfully!', 'success');
+}
+
+function confirmDeleteBooking(id, btn) {
+  _pendingDeleteRow = btn.closest('tr');
+  document.getElementById('confirm-title').textContent = 'Delete Booking';
+  document.getElementById('confirm-msg').textContent   = `Delete booking #${id}? This cannot be undone.`;
+  document.getElementById('confirm-action-btn').onclick = executeDeleteRow;
+  openModal('confirm-modal');
+}
+
+// ─── USERS ────────────────────────────────────────────────────────────────────
+function saveUser() {
+  const fname = document.getElementById('u-fname').value.trim();
+  const lname = document.getElementById('u-lname').value.trim();
+  const email = document.getElementById('u-email').value.trim();
+  const phone = document.getElementById('u-phone').value.trim();
+  const role  = document.getElementById('u-role').value;
+
+  if (!fname || !lname || !email) { showToast('Please fill in all required fields.', 'error'); return; }
+
+  const roleBg = role === 'Super Admin' ? '#f3e5f5' : role === 'Admin' ? 'var(--gold-pale)' : '#e8f5e9';
+  const roleColor = role === 'Super Admin' ? '#7b1fa2' : role === 'Admin' ? 'var(--gold)' : '#388e3c';
+  const avatars = [
+    'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=80&q=70',
+    'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=80&q=70'
+  ];
+  const av = avatars[Math.floor(Math.random()*avatars.length)];
+
+  const tbody = document.getElementById('users-tbody');
+  const tr = document.createElement('tr');
+  tr.dataset.img      = av;
+  tr.dataset.phone    = phone || '—';
+  tr.dataset.bookings = '0';
+  tr.dataset.joined   = new Date().toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'});
+  tr.innerHTML = `
+    <td><div style="display:flex;align-items:center;gap:10px;"><img class="user-avatar-sm" src="${av}" alt="">${fname} ${lname}</div></td>
+    <td>${email}</td><td>${phone||'—'}</td><td>0</td>
+    <td><span class="badge" style="background:${roleBg};color:${roleColor};">${role}</span></td>
+    <td class="action-group"><button class="btn btn-xs btn-outline" onclick="manageUser(this)">Manage</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td>`;
+  tbody.prepend(tr);
+
+  ['u-fname','u-lname','u-email','u-phone','u-pass'].forEach(i => document.getElementById(i).value = '');
+  closeModal('add-user-modal');
+  showToast('User added successfully!', 'success');
+}
+
+function manageUser(btn) {
+  const row = btn.closest('tr');
+  _managingUserRow = row;
+  const cells = row.querySelectorAll('td');
+  const name  = cells[0].textContent.trim();
+  const email = cells[1].textContent.trim();
+  const phone = row.dataset.phone || cells[2].textContent.trim();
+  const bookings = row.dataset.bookings || cells[3].textContent.trim();
+  const joined   = row.dataset.joined || '—';
+  const role     = cells[4].querySelector('.badge').textContent.trim();
+  const img      = row.dataset.img || cells[0].querySelector('img')?.src || '';
+
+  document.getElementById('mu-avatar').src    = img;
+  document.getElementById('mu-name').textContent     = name;
+  document.getElementById('mu-email').textContent    = email;
+  document.getElementById('mu-phone').textContent    = phone;
+  document.getElementById('mu-bookings').textContent = bookings;
+  document.getElementById('mu-joined').textContent   = joined;
+  document.getElementById('mu-role').value           = role;
+  openModal('manage-user-modal');
+}
+
+function saveManageUser() {
+  if (!_managingUserRow) return;
+  const newRole   = document.getElementById('mu-role').value;
+  const newStatus = document.getElementById('mu-acc-status').value;
+  const roleBg = newRole === 'Super Admin' ? '#f3e5f5' : newRole === 'Admin' ? 'var(--gold-pale)' : '#e8f5e9';
+  const roleColor = newRole === 'Super Admin' ? '#7b1fa2' : newRole === 'Admin' ? 'var(--gold)' : '#388e3c';
+  const badge = _managingUserRow.querySelectorAll('td')[4].querySelector('.badge');
+  if (badge) { badge.textContent = newRole; badge.style.background = roleBg; badge.style.color = roleColor; }
+  if (newStatus === 'Suspended') {
+    _managingUserRow.style.opacity = '0.5';
+  } else {
+    _managingUserRow.style.opacity = '';
+  }
+  closeModal('manage-user-modal');
+  showToast('User updated successfully!', 'success');
+}
+
+function confirmDeleteCurrentUser() {
+  closeModal('manage-user-modal');
+  if (_managingUserRow) {
+    _pendingDeleteRow = _managingUserRow;
+    document.getElementById('confirm-title').textContent = 'Suspend User';
+    document.getElementById('confirm-msg').textContent   = 'Are you sure you want to suspend this user?';
+    document.getElementById('confirm-action-btn').onclick = () => {
+      if (_pendingDeleteRow) { _pendingDeleteRow.style.opacity = '0.45'; _pendingDeleteRow = null; }
+      closeModal('confirm-modal');
+      showToast('User suspended.', 'success');
+    };
+    openModal('confirm-modal');
+  }
+}
+
+// ─── ROLES ────────────────────────────────────────────────────────────────────
+function saveRole() {
+  const name  = document.getElementById('r-name').value.trim();
+  const email = document.getElementById('r-email').value.trim();
+  const role  = document.getElementById('r-role').value;
+
+  if (!name || !email) { showToast('Please fill in all required fields.', 'error'); return; }
+
+  const accessMap = { User: 'View & Book', Admin: 'Manage Bookings & Vehicles', 'Super Admin': 'Full Access' };
+  const badgeClass = role === 'Super Admin' ? 'role-super' : role === 'Admin' ? 'role-admin' : 'role-user';
+
+  if (_editingRoleRow) {
+    const cells = _editingRoleRow.querySelectorAll('td');
+    cells[0].textContent = name;
+    cells[1].textContent = email;
+    cells[2].innerHTML   = `<span class="role-badge ${badgeClass}">${role}</span>`;
+    cells[3].textContent = accessMap[role];
+    _editingRoleRow = null;
+    document.getElementById('role-modal-title').textContent = 'Add New Role';
+    document.getElementById('role-save-btn').textContent    = 'Add Role';
+    showToast('Role updated!', 'success');
+  } else {
+    const tbody = document.getElementById('roles-tbody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${name}</td><td>${email}</td>
+      <td><span class="role-badge ${badgeClass}">${role}</span></td>
+      <td>${accessMap[role]}</td>
+      <td class="action-group"><button class="btn btn-xs btn-outline" onclick="editRole(this)">Edit</button><button class="btn btn-xs btn-danger" onclick="confirmDeleteRow(this)">Delete</button></td>`;
+    tbody.appendChild(tr);
+    showToast('Role added successfully!', 'success');
   }
 
-  function signOut() {
+  ['r-name','r-email'].forEach(i => document.getElementById(i).value = '');
+  closeModal('add-role-modal');
+}
+
+function editRole(btn) {
+  const row = btn.closest('tr');
+  _editingRoleRow = row;
+  const cells = row.querySelectorAll('td');
+  document.getElementById('r-name').value  = cells[0].textContent;
+  document.getElementById('r-email').value = cells[1].textContent;
+  const roleText = cells[2].querySelector('.role-badge').textContent.trim();
+  document.getElementById('r-role').value = roleText;
+  document.getElementById('role-modal-title').textContent = 'Edit Role';
+  document.getElementById('role-save-btn').textContent    = 'Save Changes';
+  openModal('add-role-modal');
+}
+
+// ─── CONFIRM DELETE (generic) ─────────────────────────────────────────────────
+function confirmDeleteRow(btn) {
+  _pendingDeleteRow = btn.closest('tr');
+  document.getElementById('confirm-title').textContent = 'Confirm Delete';
+  document.getElementById('confirm-msg').textContent   = 'Are you sure you want to delete this item? This action cannot be undone.';
+  document.getElementById('confirm-action-btn').onclick = executeDeleteRow;
+  openModal('confirm-modal');
+}
+
+function executeDeleteRow() {
+  if (_pendingDeleteRow) {
+    _pendingDeleteRow.style.transition = 'all 0.3s';
+    _pendingDeleteRow.style.opacity = '0';
+    _pendingDeleteRow.style.transform = 'translateX(20px)';
+    setTimeout(() => { _pendingDeleteRow.remove(); _pendingDeleteRow = null; }, 300);
+  }
+  closeModal('confirm-modal');
+  showToast('Item deleted.', 'success');
+}
+
+// ─── SETTINGS ────────────────────────────────────────────────────────────────
+function saveSettings() {
+  showToast('Settings saved successfully!', 'success');
+}
+
+function changePassword() {
+  const p1 = document.getElementById('s-new-pass').value;
+  const p2 = document.getElementById('s-confirm-pass').value;
+  if (!p1 || !p2) { showToast('Please fill in both password fields.', 'error'); return; }
+  if (p1 !== p2)  { showToast('Passwords do not match.', 'error'); return; }
+  if (p1.length < 8) { showToast('Password must be at least 8 characters.', 'error'); return; }
+  document.getElementById('s-new-pass').value = '';
+  document.getElementById('s-confirm-pass').value = '';
+  showToast('Password updated!', 'success');
+}
+
+// ─── SIGN OUT ─────────────────────────────────────────────────────────────────
+function confirmSignOut() {
+  _pendingDeleteRow = null;
+  document.getElementById('confirm-title').textContent = 'Sign Out';
+  document.getElementById('confirm-msg').textContent   = 'Are you sure you want to sign out of the admin panel?';
+  document.getElementById('confirm-action-btn').textContent = 'Sign Out';
+  document.getElementById('confirm-action-btn').onclick = () => {
+    closeModal('confirm-modal');
     showToast('Signed out. See you soon!');
-    setTimeout(() => { location.reload(); }, 1500);
-  }
+    setTimeout(() => location.reload(), 1800);
+  };
+  openModal('confirm-modal');
+}
 </script>
 </body>
 </html>
